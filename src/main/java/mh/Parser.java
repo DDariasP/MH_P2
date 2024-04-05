@@ -93,9 +93,6 @@ public class Parser {
             EnfriamientoSimulado[] es = (EnfriamientoSimulado[]) lista.get(2);
             for (int i = 0; i < P2.SEED.length; i++) {
                 for (int j = 0; j < P2.NUMP; j++) {
-                    writer.write("\nT0=" + es[i].solES[j].T0);
-                    writer.write("\nenfr=" + es[i].solES[j].enfr);
-                    writer.write("\nTF=" + es[i].solES[j].TF);
                     writer.write("\n" + es[i].solES[j].coste + "\t" + es[i].solES[j].eval);
                 }
                 writer.write("\n---------------------");

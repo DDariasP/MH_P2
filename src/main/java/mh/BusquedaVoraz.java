@@ -21,7 +21,7 @@ public class BusquedaVoraz {
     }
 
     public Solucion BV(int tamP) {
-        Integer[] P = P2.P.get(tamP);
+        int[] P = P2.P[tamP];
         int cam = P[2];
         ListaN listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);

@@ -17,16 +17,12 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class Grafica extends JFrame {
 
-    private final ListaD d;
-
-    public Grafica(ListaD datos, String tipo) {
-        d = datos;
-
+    public Grafica(ListaN datos, String nombre) {
         //crear la grafica
         XYPlot plot = new XYPlot();
 
         //crear funcion
-        XYDataset funcion = createDataset(tipo);
+        XYDataset funcion = createDataset(datos,nombre);
         //caracteristicas de funcion
         XYItemRenderer renderer = new XYLineAndShapeRenderer(true, true);
         renderer.setSeriesShape(0, new Rectangle2D.Double(0.0, 0.0, 1.0, 1.0));
@@ -37,7 +33,7 @@ public class Grafica extends JFrame {
         plot.setRenderer(0, renderer);
 
         //crear y añadir los ejes
-        ValueAxis domain = new NumberAxis("Evaluación(n/5k)");
+        ValueAxis domain = new NumberAxis("Evaluación (n/5k)");
         ValueAxis range = new NumberAxis("Coste");
         plot.setDomainAxis(0, domain);
         plot.setRangeAxis(0, range);
@@ -53,11 +49,11 @@ public class Grafica extends JFrame {
         setContentPane(panel);
     }
 
-    private XYDataset createDataset(String nombre) {
+    private XYDataset createDataset(ListaN datos, String nombre) {
         XYSeriesCollection dataset = new XYSeriesCollection();
         XYSeries series = new XYSeries(nombre);
-        for (int i = 0; i < d.size(); i++) {
-            series.add(i, d.get(i));
+        for (int i = 0; i < datos.size(); i++) {
+            series.add(i, datos.get(i));
         }
         dataset.addSeries(series);
         return dataset;

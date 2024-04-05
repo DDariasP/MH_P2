@@ -13,15 +13,15 @@ public class BusquedaAleatoria {
     public final int SEED;
     public Random rand;
     public Solucion[] solBA;
-    public ListaD[] convergencia;
+    public ListaN[] convergencia;
 
     public BusquedaAleatoria(int a) {
         SEED = a;
         rand = new Random(SEED);
         solBA = new Solucion[P2.NUMP];
-        convergencia = new ListaD[P2.NUMP];
+        convergencia = new ListaN[P2.NUMP];
         for (int i = 0; i < P2.NUMP; i++) {
-            convergencia[i] = new ListaD();
+            convergencia[i] = new ListaN();
         }
     }
 
@@ -40,7 +40,7 @@ public class BusquedaAleatoria {
     }
 
     public Solucion BA(int tamP) {
-        Integer[] P = P2.P.get(tamP);
+        int[] P = P2.P[tamP];
         int ciu = P[0];
         int cam = P[2];
         int eval = 0;
@@ -52,8 +52,7 @@ public class BusquedaAleatoria {
         mejor.coste = Solucion.funCoste(mejor, listaDist);
         eval++;
         mejor.eval = eval;
-        Double d = Double.valueOf(mejor.coste);
-        convergencia[tamP].add(d);
+        convergencia[tamP].add(mejor.coste);
 
         while (eval < maxeval) {
             Solucion siguiente = Solucion.genRandom(cam, listaPal, rand);
@@ -61,8 +60,7 @@ public class BusquedaAleatoria {
             eval++;
             siguiente.eval = eval;
             if (siguiente.eval % 5000 == 0) {
-                d = Double.valueOf(siguiente.coste);
-                convergencia[tamP].add(d);
+                convergencia[tamP].add(siguiente.coste);
             }
             if (mejor.coste > siguiente.coste) {
                 mejor = siguiente;

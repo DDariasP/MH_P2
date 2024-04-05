@@ -13,7 +13,7 @@ public class BusquedaTaboo {
     public final int SEED;
     public Random rand;
     public Solucion[] solBT;
-    public ListaD[] convergencia;
+    public ListaN[] convergencia;
 
     public static final int RESTART = 10;
     public static final int VECIN = 100;
@@ -31,9 +31,9 @@ public class BusquedaTaboo {
         SEED = a;
         rand = new Random(SEED);
         solBT = new Solucion[P2.NUMP];
-        convergencia = new ListaD[P2.NUMP];
+        convergencia = new ListaN[P2.NUMP];
         for (int i = 0; i < P2.NUMP; i++) {
-            convergencia[i] = new ListaD();
+            convergencia[i] = new ListaN();
         }
     }
 
@@ -52,7 +52,7 @@ public class BusquedaTaboo {
     }
 
     public Solucion BT(int tamP) {
-        Integer[] P = P2.P.get(tamP);
+        int[] P = P2.P[tamP];
         int ciu = P[0];
         int cam = P[2];
         int eval = 0;
@@ -87,8 +87,7 @@ public class BusquedaTaboo {
         Solucion actual, candidata, mejor;
         elite = new Solucion(new Matriz(1, 1, 0));
         double[] probAcum = {KRAND, KRAND + KGREED, KRAND + KGREED + KREST};
-        Double d = Double.valueOf(inicial.coste);
-        convergencia[tamP].add(d);
+        convergencia[tamP].add(inicial.coste);
 
         while (eval < maxeval && reini < RESTART) {
 
@@ -123,8 +122,7 @@ public class BusquedaTaboo {
                 inicial.coste = Solucion.funCoste(inicial, listaDist);
                 eval++;
                 inicial.eval = eval;
-                d = Double.valueOf(inicial.coste);
-                convergencia[tamP].add(d);
+                convergencia[tamP].add(inicial.coste);
                 if (elite.coste > inicial.coste) {
                     elite = inicial;
                 }
@@ -141,8 +139,7 @@ public class BusquedaTaboo {
                     eval++;
                     candidata.eval = eval;
                     if (candidata.eval % 5000 == 0) {
-                        d = Double.valueOf(candidata.coste);
-                        convergencia[tamP].add(d);
+                        convergencia[tamP].add(candidata.coste);
                     }
                     iter++;
                     vecindario++;

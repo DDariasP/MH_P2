@@ -7,39 +7,39 @@ import static javax.swing.WindowConstants.*;
  *
  * @author diego
  */
-public class BusquedaLocal {
+public class GRASP {
 
     public static final int MAX = 5000;
     public final int SEED;
     public Random rand;
-    public Solucion[] solBL;
+    public Solucion[] solGR;
     public ListaN[] convergencia;
 
-    public BusquedaLocal(int a) {
+    public GRASP(int a) {
         SEED = a;
         rand = new Random(SEED);
-        solBL = new Solucion[P2.NUMP];
+        solGR = new Solucion[P2.NUMP];
         convergencia = new ListaN[P2.NUMP];
         for (int i = 0; i < P2.NUMP; i++) {
             convergencia[i] = new ListaN();
         }
     }
 
-    public void ejecutarBL() {
+    public void ejecutarGR() {
         for (int i = 0; i < P2.NUMP; i++) {
-            solBL[i] = BL(i);
-            System.out.println(solBL[i].coste + "\t" + solBL[i].eval);
+            solGR[i] = GR(i);
+            System.out.println(solGR[i].coste + "\t" + solGR[i].eval);
             if (i == 2 && SEED == 333) {
-                Grafica g = new Grafica(convergencia[i], "BL");
+                Grafica g = new Grafica(convergencia[i], "GRASP");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
-                g.setTitle("BL - P" + (i + 1) + " - S" + SEED);
+                g.setTitle("GRASP - P" + (i + 1) + " - S" + SEED);
                 g.setVisible(true);
             }
         }
     }
 
-    public Solucion BL(int tamP) {
+    public Solucion GR(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int cam = P[2];
