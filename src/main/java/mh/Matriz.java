@@ -32,6 +32,38 @@ public class Matriz {
     }
 
     @Override
+    public boolean equals(Object o) {
+
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Matriz)) {
+            return false;
+        }
+
+        Matriz obj = (Matriz) o;
+
+        boolean iguales = true;
+        if (filas != obj.filas || columnas != obj.columnas) {
+            iguales = false;
+        }
+        int i = 0;
+        while (i < filas && iguales) {
+            int j = 0;
+            while (j < columnas && iguales) {
+                if (m[i][j] != obj.m[i][j]) {
+                    iguales = false;
+                }
+                j++;
+            }
+            i++;
+        }
+
+        return iguales;
+    }
+
+    @Override
     public String toString() {
         String output = "";
         for (int i = 0; i < filas; i++) {

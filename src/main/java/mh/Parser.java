@@ -66,7 +66,7 @@ public class Parser {
             resultados.createNewFile();
             FileWriter writer = new FileWriter(filename);
 
-            writer.write("\nBV");
+            writer.write("BV");
             writer.write("\n---------------------");
             BusquedaVoraz bv = (BusquedaVoraz) lista.get(0);
             for (int i = 0; i < P2.NUMP; i++) {
@@ -75,7 +75,7 @@ public class Parser {
             }
             writer.write("\n---------------------");
 
-            writer.write("BA - n*" + BusquedaAleatoria.MAX);
+            writer.write("\nBA - n*" + BusquedaAleatoria.MAX);
             writer.write("\n---------------------");
             BusquedaAleatoria[] ba = (BusquedaAleatoria[]) lista.get(1);
             for (int i = 0; i < P2.SEED.length; i++) {
@@ -114,6 +114,39 @@ public class Parser {
             for (int i = 0; i < P2.SEED.length; i++) {
                 for (int j = 0; j < P2.NUMP; j++) {
                     writer.write("\n" + bt[i].solBT[j].coste + "\t" + bt[i].solBT[j].eval);
+                }
+                writer.write("\n---------------------");
+            }
+            writer.write("\n---------------------");
+
+            writer.write("\nGRASP-BL - n*" + GRASP.MAX);
+            writer.write("\n---------------------");
+            GRASP[] gbl = (GRASP[]) lista.get(5);
+            for (int i = 0; i < P2.SEED.length; i++) {
+                for (int j = 0; j < P2.NUMP; j++) {
+                    writer.write("\n" + gbl[i].solGP[j].coste + "\t" + gbl[i].solGP[j].eval);
+                }
+                writer.write("\n---------------------");
+            }
+            writer.write("\n---------------------");
+
+            writer.write("\nGRASP-ES - n*" + GRASP.MAX);
+            writer.write("\n---------------------");
+            GRASP[] ges = (GRASP[]) lista.get(6);
+            for (int i = 0; i < P2.SEED.length; i++) {
+                for (int j = 0; j < P2.NUMP; j++) {
+                    writer.write("\n" + ges[i].solGP[j].coste + "\t" + ges[i].solGP[j].eval);
+                }
+                writer.write("\n---------------------");
+            }
+            writer.write("\n---------------------");
+
+            writer.write("\nGRASP-BT - n*" + GRASP.MAX);
+            writer.write("\n---------------------");
+            GRASP[] gbt = (GRASP[]) lista.get(7);
+            for (int i = 0; i < P2.SEED.length; i++) {
+                for (int j = 0; j < P2.NUMP; j++) {
+                    writer.write("\n" + gbt[i].solGP[j].coste + "\t" + gbt[i].solGP[j].eval);
                 }
                 writer.write("\n---------------------");
             }

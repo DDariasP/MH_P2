@@ -17,7 +17,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class GraficaS extends JFrame {
 
-    public GraficaS(Lista<Integer> datos, String nombre) {
+    public GraficaS(Lista<Integer> datos, String nombre, String muestra) {
         //crear la grafica
         XYPlot plot = new XYPlot();
 
@@ -25,7 +25,6 @@ public class GraficaS extends JFrame {
         XYDataset funcion = createDataset(datos, nombre);
         //caracteristicas de funcion
         XYItemRenderer renderer = new XYLineAndShapeRenderer(true, true);
-        renderer.setSeriesShape(0, new Rectangle2D.Double(0.0, 0.0, 1.0, 1.0));
         renderer.setSeriesPaint(0, Color.GREEN);
         renderer.setSeriesStroke(0, new BasicStroke(2.0f));
         //añadir funcion a la grafica
@@ -33,7 +32,7 @@ public class GraficaS extends JFrame {
         plot.setRenderer(0, renderer);
 
         //crear y añadir los ejes
-        ValueAxis domain = new NumberAxis("Evaluación (n/5k)");
+        ValueAxis domain = new NumberAxis("Evaluación (" + muestra + ")");
         ValueAxis range = new NumberAxis("Coste");
         plot.setDomainAxis(0, domain);
         plot.setRangeAxis(0, range);

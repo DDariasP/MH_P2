@@ -39,10 +39,11 @@ public class BusquedaTaboo {
 
     public void ejecutarBT() {
         for (int i = 0; i < P2.NUMP; i++) {
+            String muestra = MAX + " * n";
             solBT[i] = BT(i);
             System.out.println(solBT[i].coste + "\t" + solBT[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "BT");
+                GraficaS g = new GraficaS(convergencia[i], "BT", muestra);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BT - P" + (i + 1) + " - S" + SEED);

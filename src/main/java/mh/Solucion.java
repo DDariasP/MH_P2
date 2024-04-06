@@ -241,4 +241,26 @@ public class Solucion {
         return coste;
     }
 
+    @Override
+    public boolean equals(Object o) {
+
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Solucion)) {
+            return false;
+        }
+
+        Solucion obj = (Solucion) o;
+
+        return (m.equals(obj.m));
+    }
+
+    @Override
+    public String toString() {
+        String output = m.toString();
+        return output;
+    }
+
 }

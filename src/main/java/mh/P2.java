@@ -24,6 +24,7 @@ public class P2 {
 //        System.out.println("---------------------");
 //        RandomTest.randomTest();
 //        System.out.println("---------------------\n");
+
         listaDist = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             int ciu = P[i][0];
@@ -83,35 +84,35 @@ public class P2 {
 //        }
 //        System.out.println("");
 //
-        System.out.println("GRASP-BL");
-        GRASP[] gbl = new GRASP[SEED.length];
-        System.out.println("---------------------");
-        for (int i = 0; i < SEED.length; i++) {
-            gbl[i] = new GRASP(SEED[i]);
-            gbl[i].ejecutarBL();
-            System.out.println("---------------------");
-        }
-        
-        System.out.println("");
-        System.out.println("GRASP-ES");
-        GRASP[] ges = new GRASP[SEED.length];
-        System.out.println("---------------------");
-        for (int i = 0; i < SEED.length; i++) {
-            ges[i] = new GRASP(SEED[i]);
-            ges[i].ejecutarES();
-            System.out.println("---------------------");
-        }
-        
-        System.out.println("");
-        System.out.println("GRASP-BT");
-        GRASP[] gbt = new GRASP[SEED.length];
-        System.out.println("---------------------");
-        for (int i = 0; i < SEED.length; i++) {
-            gbt[i] = new GRASP(SEED[i]);
-            gbt[i].ejecutarBT();
-            System.out.println("---------------------");
-        }
-        System.out.println("");
+//        System.out.println("GRASP-BL");
+//        GRASP[] gbl = new GRASP[SEED.length];
+//        System.out.println("---------------------");
+//        for (int i = 0; i < SEED.length; i++) {
+//            gbl[i] = new GRASP(SEED[i]);
+//            gbl[i].ejecutarBL();
+//            System.out.println("---------------------");
+//        }
+//        
+//        System.out.println("");
+//        System.out.println("GRASP-ES");
+//        GRASP[] ges = new GRASP[SEED.length];
+//        System.out.println("---------------------");
+//        for (int i = 0; i < SEED.length; i++) {
+//            ges[i] = new GRASP(SEED[i]);
+//            ges[i].ejecutarES();
+//            System.out.println("---------------------");
+//        }
+//        
+//        System.out.println("");
+//        System.out.println("GRASP-BT");
+//        GRASP[] gbt = new GRASP[SEED.length];
+//        System.out.println("---------------------");
+//        for (int i = 0; i < SEED.length; i++) {
+//            gbt[i] = new GRASP(SEED[i]);
+//            gbt[i].ejecutarBT();
+//            System.out.println("---------------------");
+//        }
+//        System.out.println("");
 //
 //        ArrayList<Object> resultados = new ArrayList<>();
 //        resultados.add(bv);
@@ -119,6 +120,9 @@ public class P2 {
 //        resultados.add(bl);
 //        resultados.add(es);
 //        resultados.add(bt);
+//        resultados.add(gbl);
+//        resultados.add(ges);
+//        resultados.add(gbt);
 //
 //        Parser.escribir("RESULTADOS.txt", resultados);
     }

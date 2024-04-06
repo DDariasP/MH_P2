@@ -32,10 +32,11 @@ public class EnfriamientoSimulado {
 
     public void ejecutarES() {
         for (int i = 0; i < P2.NUMP; i++) {
+            String muestra = MAX + " * n";
             solES[i] = ES(i);
             System.out.println(solES[i].coste + "\t" + solES[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "ES");
+                GraficaS g = new GraficaS(convergencia[i], "ES", muestra);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("ES - P" + (i + 1) + " - S" + SEED);
@@ -219,7 +220,7 @@ public class EnfriamientoSimulado {
                 break;
             }
         }
-        
+
         actual.lasteval = eval;
         return actual;
     }

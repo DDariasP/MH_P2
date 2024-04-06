@@ -46,6 +46,17 @@ public class Lista<T> {
         return lista.contains(obj);
     }
 
+    public int count(T obj) {
+        int n = 0;
+        for (int i = 0; i < lista.size(); i++) {
+            T tmp = lista.get(i);
+            if (obj.equals(tmp)) {
+                n++;
+            }
+        }
+        return n;
+    }
+
     public int size() {
         return lista.size();
     }

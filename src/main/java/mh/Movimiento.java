@@ -49,10 +49,10 @@ public class Movimiento {
             return false;
         }
 
-        Movimiento m = (Movimiento) o;
+        Movimiento obj = (Movimiento) o;
 
-        return (oriX == m.oriX && oriY == m.oriY
-                && destX == m.destX && destY == m.destY);
+        return (oriX == obj.oriX && oriY == obj.oriY
+                && destX == obj.destX && destY == obj.destY);
     }
 
     @Override

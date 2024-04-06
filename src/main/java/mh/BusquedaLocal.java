@@ -27,10 +27,11 @@ public class BusquedaLocal {
 
     public void ejecutarBL() {
         for (int i = 0; i < P2.NUMP; i++) {
+            String muestra = MAX + " * n";
             solBL[i] = BL(i);
             System.out.println(solBL[i].coste + "\t" + solBL[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "BL");
+                GraficaS g = new GraficaS(convergencia[i], "BL", muestra);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BL - P" + (i + 1) + " - S" + SEED);

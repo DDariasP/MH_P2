@@ -59,9 +59,9 @@ public class Candidato {
             return false;
         }
 
-        Candidato c = (Candidato) o;
+        Candidato obj = (Candidato) o;
 
-        return (id == c.id);
+        return (id == obj.id);
     }
 
     @Override

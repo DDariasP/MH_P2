@@ -27,10 +27,11 @@ public class BusquedaAleatoria {
 
     public void ejecutarBA() {
         for (int i = 0; i < P2.NUMP; i++) {
+            String muestra = MAX + " * n";
             solBA[i] = BA(i);
             System.out.println(solBA[i].coste + "\t" + solBA[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "BA");
+                GraficaS g = new GraficaS(convergencia[i], "BA", muestra);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BA - P" + (i + 1) + " - S" + SEED);
