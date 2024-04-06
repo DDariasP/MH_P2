@@ -1,14 +1,16 @@
+mh/GraficaS.class
 mh/P2.class
+mh/GraficaM.class
 mh/BusquedaAleatoria.class
 mh/Matriz.class
 mh/BusquedaLocal.class
 mh/RandomTest.class
 mh/EnfriamientoSimulado.class
+mh/ILS.class
 mh/BusquedaTaboo.class
 mh/Lista.class
 mh/Parser.class
 mh/Solucion.class
-mh/Grafica.class
 mh/Candidato.class
 mh/BusquedaVoraz.class
 mh/GRASP.class

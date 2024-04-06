@@ -1,8 +1,9 @@
-/home/diego/NetBeansProjects/MH_P2/src/main/java/mh/Grafica.java
+/home/diego/NetBeansProjects/MH_P2/src/main/java/mh/ILS.java
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/BusquedaAleatoria.java
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/GRASP.java
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/Candidato.java
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/Movimiento.java
+/home/diego/NetBeansProjects/MH_P2/src/main/java/mh/GraficaM.java
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/BusquedaVoraz.java
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/Matriz.java
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/P2.java
@@ -12,4 +13,5 @@
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/Lista.java
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/BusquedaTaboo.java
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/BusquedaLocal.java
+/home/diego/NetBeansProjects/MH_P2/src/main/java/mh/GraficaS.java
 /home/diego/NetBeansProjects/MH_P2/src/main/java/mh/RandomTest.java

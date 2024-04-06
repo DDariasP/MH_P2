@@ -15,14 +15,14 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class Grafica extends JFrame {
+public class GraficaS extends JFrame {
 
-    public Grafica(Lista<Integer> datos, String nombre) {
+    public GraficaS(Lista<Integer> datos, String nombre) {
         //crear la grafica
         XYPlot plot = new XYPlot();
 
         //crear funcion
-        XYDataset funcion = createDataset(datos,nombre);
+        XYDataset funcion = createDataset(datos, nombre);
         //caracteristicas de funcion
         XYItemRenderer renderer = new XYLineAndShapeRenderer(true, true);
         renderer.setSeriesShape(0, new Rectangle2D.Double(0.0, 0.0, 1.0, 1.0));

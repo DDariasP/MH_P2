@@ -13,7 +13,7 @@ public class GRASP {
     public final int SEED;
     public Random rand;
     public Solucion[] solGP;
-    public Lista[] convergencia;
+    public Lista[][] convergencia;
 
     public static final int RESTART = 10;
     public static final int VECIN = 100;
@@ -22,83 +22,126 @@ public class GRASP {
         SEED = a;
         rand = new Random(SEED);
         solGP = new Solucion[P2.NUMP];
-        convergencia = new Lista[P2.NUMP];
+        convergencia = new Lista[P2.NUMP][RESTART];
         for (int i = 0; i < P2.NUMP; i++) {
-            convergencia[i] = new Lista<Integer>();
+            for (int j = 0; j < RESTART; j++) {
+                convergencia[i][j] = new Lista<Integer>();
+            }
         }
     }
 
-    public void ejecutarGP() {
+    public void ejecutarBL() {
         for (int i = 0; i < P2.NUMP; i++) {
-            solGP[i] = GP(i);
+            String muestra = (MAX / RESTART / RESTART) + " * n";
+            solGP[i] = BL(i);
             System.out.println(solGP[i].coste + "\t" + solGP[i].eval);
             if (i == 2 && SEED == 333) {
-                Grafica g = new Grafica(convergencia[i], "GRASP");
+                GraficaM g = new GraficaM(convergencia[i], "GRASP-BL", muestra);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                g.setBounds(200, 350, 800, 400);
-                g.setTitle("GRASP - P" + (i + 1) + " - S" + SEED);
+                g.setBounds(200, 350, 800, 500);
+                g.setTitle("GRASP-BL - P" + (i + 1) + " - S" + SEED);
                 g.setVisible(true);
             }
         }
     }
 
-    public Solucion GP(int tamP) {
+    public Solucion BL(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
-        int cam = P[2];
-        int eval = 0;
         int maxeval = MAX * ciu;
-        int iter = 0;
         int maxiter = maxeval / RESTART;
-        int reini = 0;
-        int vecindario = 0;
-        Matriz listaDist = P2.listaDist.get(tamP);
 
-//        Solucion inicial = LRCCamiones(tamP);
-        Solucion inicial = LRCPalets(tamP);
-        inicial.coste = Solucion.funCoste(inicial, listaDist);
-        eval++;
-        inicial.eval = eval;
-        Solucion candidata, mejor;
+        int lasteval = -1;
         Solucion elite = new Solucion(new Matriz(1, 1, 0));
-        convergencia[tamP].add(inicial.coste);
+        for (int i = 0; i < RESTART; i++) {
+//            Solucion inicial = LRCCamiones(tamP);
+            Solucion inicial = LRCPalets(tamP);
+            inicial.eval = lasteval;
+            Solucion tmp = BusquedaLocal.BL(rand, tamP, maxiter, inicial, convergencia[tamP][i]);
+            if (elite.coste > tmp.coste) {
+                elite = tmp;
+            }
+            lasteval = tmp.lasteval;
+        }
+        return elite;
+    }
 
-        while (eval < maxeval && reini < RESTART) {
-            if (reini > 0) {
-//                inicial = LRCCamiones(tamP);
-                inicial = LRCPalets(tamP);
-                inicial.coste = Solucion.funCoste(inicial, listaDist);
-                eval++;
-                inicial.eval = eval;
-                convergencia[tamP].add(inicial.coste);
-                if (elite.coste > inicial.coste) {
-                    elite = inicial;
+    public void ejecutarES() {
+        for (int i = 0; i < P2.NUMP; i++) {
+            String muestra = (MAX / RESTART / RESTART) + " * n";
+            solGP[i] = ES(i);
+            System.out.println(solGP[i].coste + "\t" + solGP[i].eval);
+            if (i == 2 && SEED == 333) {
+                GraficaM g = new GraficaM(convergencia[i], "GRASP-ES", muestra);
+                g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                g.setBounds(200, 350, 800, 500);
+                g.setTitle("GRASP-ES - P" + (i + 1) + " - S" + SEED);
+                g.setVisible(true);
+            }
+        }
+    }
+
+    public Solucion ES(int tamP) {
+        int[] P = P2.P[tamP];
+        int ciu = P[0];
+        int maxeval = MAX * ciu;
+        int maxiter = maxeval / RESTART;
+
+        int lasteval = -1;
+        Solucion elite = new Solucion(new Matriz(1, 1, 0));
+        for (int i = 0; i < RESTART; i++) {
+//            Solucion inicial = LRCCamiones(tamP);
+            Solucion inicial = LRCPalets(tamP);
+            inicial.eval = lasteval;
+            Solucion tmp = EnfriamientoSimulado.ES(rand, tamP, maxiter, inicial, convergencia[tamP][i]);
+            if (elite.coste > tmp.coste) {
+                elite = tmp;
+            }
+            lasteval = tmp.lasteval;
+        }
+        return elite;
+    }
+
+    public void ejecutarBT() {
+        for (int i = 0; i < P2.NUMP; i++) {
+            String muestra = (MAX / RESTART / RESTART) + " * n";
+            solGP[i] = BT(i);
+            System.out.println(solGP[i].coste + "\t" + solGP[i].eval);
+            if (i == 2 && SEED == 333) {
+                GraficaM g = new GraficaM(convergencia[i], "GRASP-BT", muestra);
+                g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                g.setBounds(200, 350, 800, 500);
+                g.setTitle("GRASP-BT - P" + (i + 1) + " - S" + SEED);
+                g.setVisible(true);
+            }
+        }
+    }
+
+    public Solucion BT(int tamP) {
+        int[] P = P2.P[tamP];
+        int ciu = P[0];
+        int maxeval = MAX * ciu;
+        int maxiter = maxeval / RESTART;
+
+        int lasteval = -1;
+        double tenencia = 4.0;
+        Solucion elite = new Solucion(new Matriz(1, 1, 0));
+        for (int i = 0; i < RESTART; i++) {
+            if (i > 0) {
+                if (rand.nextBoolean()) {
+                    tenencia = Math.round(tenencia + tenencia * BusquedaTaboo.KSIZE);
+                } else {
+                    tenencia = Math.max(Math.round(tenencia - tenencia * BusquedaTaboo.KSIZE), 2.0);
                 }
             }
-
-            mejor = inicial;
-            iter = 0;
-            while (iter < maxiter) {
-                vecindario = 0;
-                while (vecindario < VECIN) {
-                    candidata = Solucion.gen4optAlt(cam, mejor, rand);
-                    candidata.coste = Solucion.funCoste(candidata, listaDist);
-                    eval++;
-                    candidata.eval = eval;
-                    if (candidata.eval % 5000 == 0) {
-                        convergencia[tamP].add(candidata.coste);
-                    }
-                    iter++;
-                    vecindario++;
-                    if (mejor.coste > candidata.coste) {
-                        mejor = candidata;
-                    }
-                }
-                if (elite.coste > mejor.coste) {
-                    elite = mejor;
-                }
+//            Solucion inicial = LRCCamiones(tamP);
+            Solucion inicial = LRCPalets(tamP);
+            inicial.eval = lasteval;
+            Solucion tmp = BusquedaTaboo.BT(rand, tamP, maxiter, inicial, inicial, convergencia[tamP][i], tenencia);
+            if (elite.coste > tmp.coste) {
+                elite = tmp;
             }
-            reini++;
+            lasteval = tmp.lasteval;
         }
 
         return elite;

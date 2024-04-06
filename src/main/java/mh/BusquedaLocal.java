@@ -30,7 +30,7 @@ public class BusquedaLocal {
             solBL[i] = BL(i);
             System.out.println(solBL[i].coste + "\t" + solBL[i].eval);
             if (i == 2 && SEED == 333) {
-                Grafica g = new Grafica(convergencia[i], "BL");
+                GraficaS g = new GraficaS(convergencia[i], "BL");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BL - P" + (i + 1) + " - S" + SEED);
@@ -48,26 +48,60 @@ public class BusquedaLocal {
         Lista listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
 
-        Solucion mejor = Solucion.genRandom(cam, listaPal, rand);
-        mejor.coste = Solucion.funCoste(mejor, listaDist);
+        Solucion inicial = Solucion.genRandom(cam, listaPal, rand);
+        inicial.coste = Solucion.funCoste(inicial, listaDist);
         eval++;
-        mejor.eval = eval;
-        convergencia[tamP].add(mejor.coste);
+        inicial.eval = eval;
+        convergencia[tamP].add(inicial.coste);
 
+        Solucion actual = inicial;
         while (eval < maxeval) {
-            Solucion siguiente = Solucion.gen4optAlt(cam, mejor, rand);
+            Solucion siguiente = Solucion.gen4opt(cam, actual, rand);
             siguiente.coste = Solucion.funCoste(siguiente, listaDist);
             eval++;
             siguiente.eval = eval;
-            if (siguiente.eval % 5000 == 0) {
+            if (siguiente.eval % MAX == 0) {
                 convergencia[tamP].add(siguiente.coste);
             }
-            if (mejor.coste > siguiente.coste) {
-                mejor = siguiente;
+            if (actual.coste > siguiente.coste) {
+                actual = siguiente;
             }
         }
 
-        return mejor;
+        return actual;
+    }
+
+    public static Solucion BL(Random rand, int tamP, int maxiter, Solucion inicial, Lista<Integer> convergencia) {
+        int[] P = P2.P[tamP];
+        int cam = P[2];
+        int iter = 0;
+        int eval = inicial.eval;
+        Matriz listaDist = P2.listaDist.get(tamP);
+
+        inicial.coste = Solucion.funCoste(inicial, listaDist);
+        iter++;
+        eval++;
+        inicial.eval = eval;
+        convergencia.add(inicial.coste);
+        int muestra = maxiter / GRASP.RESTART;
+
+        Solucion actual = inicial;
+        while (iter < maxiter) {
+            Solucion siguiente = Solucion.gen4opt(cam, actual, rand);
+            siguiente.coste = Solucion.funCoste(siguiente, listaDist);
+            iter++;
+            eval++;
+            siguiente.eval = eval;
+            if (siguiente.eval % muestra == 0) {
+                convergencia.add(siguiente.coste);
+            }
+            if (actual.coste > siguiente.coste) {
+                actual = siguiente;
+            }
+        }
+
+        actual.lasteval = eval;
+        return actual;
     }
 
 }

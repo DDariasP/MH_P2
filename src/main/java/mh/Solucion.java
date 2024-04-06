@@ -9,6 +9,7 @@ import java.util.Random;
 public class Solucion {
 
     public int eval;
+    public int lasteval;
     public Matriz m;
     public int coste;
     public double T0;
@@ -18,6 +19,7 @@ public class Solucion {
 
     public Solucion(Matriz n) {
         eval = -1;
+        lasteval = -1;
         m = new Matriz(n);
         coste = Integer.MAX_VALUE;
         mov = new Movimiento();
@@ -25,6 +27,7 @@ public class Solucion {
 
     public Solucion(Matriz n, Movimiento a) {
         eval = -1;
+        lasteval = -1;
         m = new Matriz(n);
         coste = Integer.MAX_VALUE;
         mov = a;

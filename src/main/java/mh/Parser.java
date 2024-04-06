@@ -66,9 +66,18 @@ public class Parser {
             resultados.createNewFile();
             FileWriter writer = new FileWriter(filename);
 
+            writer.write("\nBV");
+            writer.write("\n---------------------");
+            BusquedaVoraz bv = (BusquedaVoraz) lista.get(0);
+            for (int i = 0; i < P2.NUMP; i++) {
+                writer.write("\n" + bv.solBV[i].coste);
+                writer.write("\n" + bv.solBV[i].m.toString());
+            }
+            writer.write("\n---------------------");
+
             writer.write("BA - n*" + BusquedaAleatoria.MAX);
             writer.write("\n---------------------");
-            BusquedaAleatoria[] ba = (BusquedaAleatoria[]) lista.get(0);
+            BusquedaAleatoria[] ba = (BusquedaAleatoria[]) lista.get(1);
             for (int i = 0; i < P2.SEED.length; i++) {
                 for (int j = 0; j < P2.NUMP; j++) {
                     writer.write("\n" + ba[i].solBA[j].coste + "\t" + ba[i].solBA[j].eval);
@@ -79,7 +88,7 @@ public class Parser {
 
             writer.write("\nBL - n*" + BusquedaLocal.MAX);
             writer.write("\n---------------------");
-            BusquedaLocal[] bl = (BusquedaLocal[]) lista.get(1);
+            BusquedaLocal[] bl = (BusquedaLocal[]) lista.get(2);
             for (int i = 0; i < P2.SEED.length; i++) {
                 for (int j = 0; j < P2.NUMP; j++) {
                     writer.write("\n" + bl[i].solBL[j].coste + "\t" + bl[i].solBL[j].eval);
@@ -90,7 +99,7 @@ public class Parser {
 
             writer.write("\nES - n*" + EnfriamientoSimulado.MAX);
             writer.write("\n---------------------");
-            EnfriamientoSimulado[] es = (EnfriamientoSimulado[]) lista.get(2);
+            EnfriamientoSimulado[] es = (EnfriamientoSimulado[]) lista.get(3);
             for (int i = 0; i < P2.SEED.length; i++) {
                 for (int j = 0; j < P2.NUMP; j++) {
                     writer.write("\n" + es[i].solES[j].coste + "\t" + es[i].solES[j].eval);
@@ -101,21 +110,12 @@ public class Parser {
 
             writer.write("\nBT - n*" + BusquedaTaboo.MAX);
             writer.write("\n---------------------");
-            BusquedaTaboo[] bt = (BusquedaTaboo[]) lista.get(3);
+            BusquedaTaboo[] bt = (BusquedaTaboo[]) lista.get(4);
             for (int i = 0; i < P2.SEED.length; i++) {
                 for (int j = 0; j < P2.NUMP; j++) {
                     writer.write("\n" + bt[i].solBT[j].coste + "\t" + bt[i].solBT[j].eval);
                 }
                 writer.write("\n---------------------");
-            }
-            writer.write("\n---------------------");
-
-            writer.write("\nBV");
-            writer.write("\n---------------------");
-            BusquedaVoraz bv = (BusquedaVoraz) lista.get(4);
-            for (int i = 0; i < P2.NUMP; i++) {
-                writer.write("\n" + bv.solBV[i].coste);
-                writer.write("\n" + bv.solBV[i].m.toString());
             }
             writer.write("\n---------------------");
 

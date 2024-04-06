@@ -42,7 +42,7 @@ public class BusquedaTaboo {
             solBT[i] = BT(i);
             System.out.println(solBT[i].coste + "\t" + solBT[i].eval);
             if (i == 2 && SEED == 333) {
-                Grafica g = new Grafica(convergencia[i], "BT");
+                GraficaS g = new GraficaS(convergencia[i], "BT");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BT - P" + (i + 1) + " - S" + SEED);
@@ -84,15 +84,14 @@ public class BusquedaTaboo {
         inicial.coste = Solucion.funCoste(inicial, listaDist);
         eval++;
         inicial.eval = eval;
-        Solucion actual, candidata, mejor;
+        Solucion actual, siguiente, mejor;
         elite = new Solucion(new Matriz(1, 1, 0));
         double[] probAcum = {KRAND, KRAND + KGREED, KRAND + KGREED + KREST};
         convergencia[tamP].add(inicial.coste);
 
         while (eval < maxeval && reini < RESTART) {
-
             //Limpiando la lista tabu
-            listaTaboo = new Lista<Movimiento>();
+            listaTaboo = new Lista<>();
             if (reini > 0) {
                 if (rand.nextBoolean()) {
                     tenencia = Math.round(tenencia + tenencia * KSIZE);
@@ -134,17 +133,17 @@ public class BusquedaTaboo {
             while (iter < maxiter) {
                 vecindario = 0;
                 while (vecindario < VECIN) {
-                    candidata = Solucion.genTaboo(cam, actual, rand, listaTaboo);
-                    candidata.coste = Solucion.funCoste(candidata, listaDist);
+                    siguiente = Solucion.genTaboo(cam, actual, rand, listaTaboo);
+                    siguiente.coste = Solucion.funCoste(siguiente, listaDist);
                     eval++;
-                    candidata.eval = eval;
-                    if (candidata.eval % 5000 == 0) {
-                        convergencia[tamP].add(candidata.coste);
+                    siguiente.eval = eval;
+                    if (siguiente.eval % MAX == 0) {
+                        convergencia[tamP].add(siguiente.coste);
                     }
                     iter++;
                     vecindario++;
-                    if (mejor.coste > candidata.coste) {
-                        mejor = candidata;
+                    if (mejor.coste > siguiente.coste) {
+                        mejor = siguiente;
                     }
                 }
                 actual = mejor;
@@ -160,7 +159,67 @@ public class BusquedaTaboo {
         return elite;
     }
 
+    public static Solucion BT(Random rand, int tamP, int maxiter, Solucion inicial, Solucion elite, Lista<Integer> convergencia, double tenencia) {
+        int[] P = P2.P[tamP];
+        int cam = P[2];
+        int iter = 0;
+        int eval = inicial.eval;
+        int vecindario = 0;
+        Matriz listaDist = P2.listaDist.get(tamP);
+
+        inicial.coste = Solucion.funCoste(inicial, listaDist);
+        iter++;
+        eval++;
+        inicial.eval = eval;
+        convergencia.add(inicial.coste);
+        int muestra = maxiter / GRASP.RESTART;
+        Solucion actual, siguiente, mejor;
+        if (elite.coste > inicial.coste) {
+            elite = inicial;
+        }
+
+        //Limpiando la lista tabu
+        Lista<Movimiento> listaTaboo = new Lista<>();
+
+        while (iter < maxiter) {
+            actual = inicial;
+            mejor = new Solucion(new Matriz(1, 1, 0));
+            vecindario = 0;
+            while (vecindario < GRASP.VECIN) {
+                siguiente = Solucion.genTaboo(cam, actual, rand, listaTaboo);
+                siguiente.coste = Solucion.funCoste(siguiente, listaDist);
+                iter++;
+                eval++;
+                siguiente.eval = eval;
+                if (siguiente.eval % muestra == 0) {
+                    convergencia.add(siguiente.coste);
+                }
+                vecindario++;
+                if (mejor.coste > siguiente.coste) {
+                    mejor = siguiente;
+                }
+            }
+            actual = mejor;
+            BusquedaTaboo.actualizarTaboo(actual, listaTaboo, tenencia);
+            if (elite.coste > actual.coste) {
+                elite = actual;
+            }
+        }
+
+        elite.lasteval = eval;
+        return elite;
+    }
+
     private void actualizarTaboo(Solucion s) {
+        if (!listaTaboo.contains(s.mov)) {
+            if (listaTaboo.size() == tenencia) {
+                listaTaboo.remove(0);
+            }
+            listaTaboo.add(s.mov);
+        }
+    }
+
+    private static void actualizarTaboo(Solucion s, Lista<Movimiento> listaTaboo, double tenencia) {
         if (!listaTaboo.contains(s.mov)) {
             if (listaTaboo.size() == tenencia) {
                 listaTaboo.remove(0);

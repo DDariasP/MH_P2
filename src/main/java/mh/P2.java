@@ -35,7 +35,14 @@ public class P2 {
             int pal = P[i][1];
             listaPal.add(Parser.leerPal("destinos_palets_" + pal + ".txt"));
         }
-        
+
+//        System.out.println("BV");
+//        BusquedaVoraz bv = new BusquedaVoraz();
+//        System.out.println("---------------------");
+//        bv.ejecutarBV();
+//        System.out.println("---------------------");
+//        System.out.println("");
+//      
 //        System.out.println("BA");
 //        BusquedaAleatoria[] ba = new BusquedaAleatoria[SEED.length];
 //        System.out.println("---------------------");
@@ -76,29 +83,42 @@ public class P2 {
 //        }
 //        System.out.println("");
 //
-        System.out.println("GRASP");
-        GRASP[] gp = new GRASP[SEED.length];
+        System.out.println("GRASP-BL");
+        GRASP[] gbl = new GRASP[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
-            gp[i] = new GRASP(SEED[i]);
-            gp[i].ejecutarGP();
+            gbl[i] = new GRASP(SEED[i]);
+            gbl[i].ejecutarBL();
+            System.out.println("---------------------");
+        }
+        
+        System.out.println("");
+        System.out.println("GRASP-ES");
+        GRASP[] ges = new GRASP[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            ges[i] = new GRASP(SEED[i]);
+            ges[i].ejecutarES();
+            System.out.println("---------------------");
+        }
+        
+        System.out.println("");
+        System.out.println("GRASP-BT");
+        GRASP[] gbt = new GRASP[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            gbt[i] = new GRASP(SEED[i]);
+            gbt[i].ejecutarBT();
             System.out.println("---------------------");
         }
         System.out.println("");
 //
-//        System.out.println("BV");
-//        BusquedaVoraz bv = new BusquedaVoraz();
-//        System.out.println("---------------------");
-//        bv.ejecutarBV();
-//        System.out.println("---------------------");
-//        System.out.println("");
-//
 //        ArrayList<Object> resultados = new ArrayList<>();
+//        resultados.add(bv);
 //        resultados.add(ba);
 //        resultados.add(bl);
 //        resultados.add(es);
 //        resultados.add(bt);
-//        resultados.add(bv);
 //
 //        Parser.escribir("RESULTADOS.txt", resultados);
     }

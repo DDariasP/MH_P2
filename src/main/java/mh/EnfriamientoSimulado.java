@@ -35,7 +35,7 @@ public class EnfriamientoSimulado {
             solES[i] = ES(i);
             System.out.println(solES[i].coste + "\t" + solES[i].eval);
             if (i == 2 && SEED == 333) {
-                Grafica g = new Grafica(convergencia[i], "ES");
+                GraficaS g = new GraficaS(convergencia[i], "ES");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("ES - P" + (i + 1) + " - S" + SEED);
@@ -83,33 +83,34 @@ public class EnfriamientoSimulado {
         int enfr = 0;
         int maxenfr = KI * ciu;
 
-        Solucion mejor = Solucion.genRandom(cam, listaPal, rand);
-        mejor.coste = Solucion.funCoste(mejor, listaDist);
+        Solucion inicial = Solucion.genRandom(cam, listaPal, rand);
+        inicial.coste = Solucion.funCoste(inicial, listaDist);
         eval++;
-        mejor.eval = eval;
-        mejor.T0 = T0;
-        mejor.TF = T0;
-        mejor.enfr = enfr;
-        convergencia[tamP].add(mejor.coste);
+        inicial.eval = eval;
+        inicial.T0 = T0;
+        inicial.TF = T0;
+        inicial.enfr = enfr;
+        convergencia[tamP].add(inicial.coste);
 
+        Solucion actual = inicial;
         while (true) {
             int vecindario = 0;
             while (true) {
-                Solucion candidata = Solucion.gen2optAlt(cam, mejor, rand);
-                candidata.coste = Solucion.funCoste(candidata, listaDist);
+                Solucion siguiente = Solucion.gen2optAlt(cam, actual, rand);
+                siguiente.coste = Solucion.funCoste(siguiente, listaDist);
                 eval++;
-                candidata.eval = eval;
-                if (candidata.eval % 5000 == 0) {
-                    convergencia[tamP].add(candidata.coste);
+                siguiente.eval = eval;
+                if (siguiente.eval % MAX == 0) {
+                    convergencia[tamP].add(siguiente.coste);
                 }
-                candidata.T0 = T0;
-                candidata.TF = T;
-                candidata.enfr = enfr;
+                siguiente.T0 = T0;
+                siguiente.TF = T;
+                siguiente.enfr = enfr;
                 vecindario++;
-                delta = candidata.coste - mejor.coste;
+                delta = siguiente.coste - actual.coste;
                 aceptacion = rand.nextDouble();
                 if (delta < 0 || aceptacion < Math.exp(-delta / T)) {
-                    mejor = candidata;
+                    actual = siguiente;
 
                 }
                 if (vecindario == VECIN - 1) {
@@ -129,6 +130,97 @@ public class EnfriamientoSimulado {
             }
         }
 
-        return mejor;
+        return actual;
+    }
+
+    public static Solucion ES(Random rand, int tamP, int maxiter, Solucion inicial, Lista<Integer> convergencia) {
+        int[] P = P2.P[tamP];
+        int ciu = P[0];
+        int cam = P[2];
+        Matriz listaDist = P2.listaDist.get(tamP);
+        int filas = listaDist.filas;
+
+        double dividendo = 0.0;
+        double divisor = 0.0;
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j <= i; j++) {
+                int d = listaDist.m[i][j];
+                dividendo = dividendo + d;
+                divisor++;
+
+            }
+        }
+        double media = dividendo / divisor;
+
+        double sumatorio = 0.0;
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j <= i; j++) {
+                int d = listaDist.m[i][j];
+                double resta = d - media;
+                sumatorio = sumatorio + Math.pow(resta, 2);
+
+            }
+        }
+        double sigma = Math.sqrt(sumatorio / divisor);
+        double lnCiu = Math.log(ciu);
+        double T0 = sigma / lnCiu;
+
+        double T = T0;
+        int iter = 0;
+        int eval = inicial.eval;
+        int enfr = 0;
+        int maxenfr = KI * ciu;
+
+        inicial.coste = Solucion.funCoste(inicial, listaDist);
+        iter++;
+        eval++;
+        inicial.eval = eval;
+        inicial.T0 = T0;
+        inicial.TF = T0;
+        inicial.enfr = enfr;
+        convergencia.add(inicial.coste);
+        int muestra = maxiter / GRASP.RESTART;
+
+        Solucion actual = inicial;
+        while (true) {
+            int vecindario = 0;
+            while (true) {
+                Solucion siguiente = Solucion.gen2optAlt(cam, actual, rand);
+                siguiente.coste = Solucion.funCoste(siguiente, listaDist);
+                iter++;
+                eval++;
+                siguiente.eval = eval;
+                if (siguiente.eval % muestra == 0) {
+                    convergencia.add(siguiente.coste);
+                }
+                siguiente.T0 = T0;
+                siguiente.TF = T;
+                siguiente.enfr = enfr;
+                vecindario++;
+                double delta = siguiente.coste - actual.coste;
+                double aceptacion = rand.nextDouble();
+                if (delta < 0 || aceptacion < Math.exp(-delta / T)) {
+                    actual = siguiente;
+
+                }
+                if (vecindario == GRASP.VECIN - 1) {
+                    T = KA * T;
+                    enfr++;
+                    break;
+                }
+                if (iter == maxiter - 1) {
+                    break;
+                }
+            }
+            if (enfr == maxenfr - 1) {
+                break;
+            }
+            if (iter == maxiter - 1) {
+                break;
+            }
+        }
+        
+        actual.lasteval = eval;
+        return actual;
     }
 }

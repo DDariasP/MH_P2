@@ -30,7 +30,7 @@ public class BusquedaAleatoria {
             solBA[i] = BA(i);
             System.out.println(solBA[i].coste + "\t" + solBA[i].eval);
             if (i == 2 && SEED == 333) {
-                Grafica g = new Grafica(convergencia[i], "BA");
+                GraficaS g = new GraficaS(convergencia[i], "BA");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BA - P" + (i + 1) + " - S" + SEED);
@@ -48,26 +48,27 @@ public class BusquedaAleatoria {
         Lista listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
 
-        Solucion mejor = Solucion.genRandom(cam, listaPal, rand);
-        mejor.coste = Solucion.funCoste(mejor, listaDist);
+        Solucion inicial = Solucion.genRandom(cam, listaPal, rand);
+        inicial.coste = Solucion.funCoste(inicial, listaDist);
         eval++;
-        mejor.eval = eval;
-        convergencia[tamP].add(mejor.coste);
+        inicial.eval = eval;
+        convergencia[tamP].add(inicial.coste);
 
+        Solucion actual = inicial;
         while (eval < maxeval) {
             Solucion siguiente = Solucion.genRandom(cam, listaPal, rand);
             siguiente.coste = Solucion.funCoste(siguiente, listaDist);
             eval++;
             siguiente.eval = eval;
-            if (siguiente.eval % 5000 == 0) {
+            if (siguiente.eval % MAX == 0) {
                 convergencia[tamP].add(siguiente.coste);
             }
-            if (mejor.coste > siguiente.coste) {
-                mejor = siguiente;
+            if (actual.coste > siguiente.coste) {
+                actual = siguiente;
             }
         }
 
-        return mejor;
+        return actual;
     }
 
 }
