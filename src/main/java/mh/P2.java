@@ -13,7 +13,7 @@ public class P2 {
     public static final int[][] P = {{25, 84, 6}, {38, 126, 9}, {50, 168, 12}};
     public static final int[] SEED = {111, 222, 333, 123, 321};
     public static ArrayList<Matriz> listaDist;
-    public static ArrayList<ListaN> listaPal;
+    public static ArrayList<Lista> listaPal;
 
     /**
      * @param args the command line arguments
@@ -24,7 +24,6 @@ public class P2 {
 //        System.out.println("---------------------");
 //        RandomTest.randomTest();
 //        System.out.println("---------------------\n");
-
         listaDist = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             int ciu = P[i][0];
@@ -36,7 +35,7 @@ public class P2 {
             int pal = P[i][1];
             listaPal.add(Parser.leerPal("destinos_palets_" + pal + ".txt"));
         }
-
+        
 //        System.out.println("BA");
 //        BusquedaAleatoria[] ba = new BusquedaAleatoria[SEED.length];
 //        System.out.println("---------------------");
@@ -76,6 +75,16 @@ public class P2 {
 //            System.out.println("---------------------");
 //        }
 //        System.out.println("");
+//
+        System.out.println("GRASP");
+        GRASP[] gp = new GRASP[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            gp[i] = new GRASP(SEED[i]);
+            gp[i].ejecutarGP();
+            System.out.println("---------------------");
+        }
+        System.out.println("");
 //
 //        System.out.println("BV");
 //        BusquedaVoraz bv = new BusquedaVoraz();

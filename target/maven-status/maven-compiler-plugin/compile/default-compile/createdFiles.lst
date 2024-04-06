@@ -5,11 +5,11 @@ mh/BusquedaLocal.class
 mh/RandomTest.class
 mh/EnfriamientoSimulado.class
 mh/BusquedaTaboo.class
+mh/Lista.class
 mh/Parser.class
 mh/Solucion.class
-mh/ListaN.class
 mh/Grafica.class
+mh/Candidato.class
 mh/BusquedaVoraz.class
 mh/GRASP.class
-mh/ListaM.class
 mh/Movimiento.class

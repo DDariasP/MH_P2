@@ -23,7 +23,7 @@ public class BusquedaVoraz {
     public Solucion BV(int tamP) {
         int[] P = P2.P[tamP];
         int cam = P[2];
-        ListaN listaPal = P2.listaPal.get(tamP);
+        Lista<Integer> listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
 
         int[] ultimopal = new int[cam];

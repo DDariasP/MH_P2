@@ -13,7 +13,7 @@ public class BusquedaTaboo {
     public final int SEED;
     public Random rand;
     public Solucion[] solBT;
-    public ListaN[] convergencia;
+    public Lista[] convergencia;
 
     public static final int RESTART = 10;
     public static final int VECIN = 100;
@@ -22,7 +22,7 @@ public class BusquedaTaboo {
     public static final double KREST = 0.25;
     public static final double KSIZE = 0.50;
     public double tenencia;
-    public ListaM listaTaboo;
+    public Lista<Movimiento> listaTaboo;
     public Solucion elite;
     public int[][][] memoriaM;
     public int[][] memoriaC;
@@ -31,9 +31,9 @@ public class BusquedaTaboo {
         SEED = a;
         rand = new Random(SEED);
         solBT = new Solucion[P2.NUMP];
-        convergencia = new ListaN[P2.NUMP];
+        convergencia = new Lista[P2.NUMP];
         for (int i = 0; i < P2.NUMP; i++) {
-            convergencia[i] = new ListaN();
+            convergencia[i] = new Lista<Integer>();
         }
     }
 
@@ -61,7 +61,7 @@ public class BusquedaTaboo {
         int maxiter = maxeval / RESTART;
         int reini = 0;
         int vecindario = 0;
-        ListaN listaPal = P2.listaPal.get(tamP);
+        Lista listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
 
         tenencia = 4.0;
@@ -92,7 +92,7 @@ public class BusquedaTaboo {
         while (eval < maxeval && reini < RESTART) {
 
             //Limpiando la lista tabu
-            listaTaboo = new ListaM();
+            listaTaboo = new Lista<Movimiento>();
             if (reini > 0) {
                 if (rand.nextBoolean()) {
                     tenencia = Math.round(tenencia + tenencia * KSIZE);

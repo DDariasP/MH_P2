@@ -37,8 +37,8 @@ public class Parser {
         return listaDist;
     }
 
-    public static ListaN leerPal(String filename) {
-        ListaN listaPal = new ListaN();
+    public static Lista<Integer> leerPal(String filename) {
+        Lista<Integer> listaPal = new Lista<>();
         try {
             File file = new File(filename);
             Scanner scanner = new Scanner(file);

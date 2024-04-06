@@ -13,15 +13,15 @@ public class BusquedaLocal {
     public final int SEED;
     public Random rand;
     public Solucion[] solBL;
-    public ListaN[] convergencia;
+    public Lista[] convergencia;
 
     public BusquedaLocal(int a) {
         SEED = a;
         rand = new Random(SEED);
         solBL = new Solucion[P2.NUMP];
-        convergencia = new ListaN[P2.NUMP];
+        convergencia = new Lista[P2.NUMP];
         for (int i = 0; i < P2.NUMP; i++) {
-            convergencia[i] = new ListaN();
+            convergencia[i] = new Lista<Integer>();
         }
     }
 
@@ -45,7 +45,7 @@ public class BusquedaLocal {
         int cam = P[2];
         int eval = 0;
         int maxeval = MAX * ciu;
-        ListaN listaPal = P2.listaPal.get(tamP);
+        Lista listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
 
         Solucion mejor = Solucion.genRandom(cam, listaPal, rand);

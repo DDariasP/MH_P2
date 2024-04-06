@@ -13,7 +13,7 @@ public class EnfriamientoSimulado {
     public final int SEED;
     public Random rand;
     public Solucion[] solES;
-    public ListaN[] convergencia;
+    public Lista[] convergencia;
 
     public static final double KA = 0.9;
     public static final int VECIN = 100;
@@ -24,9 +24,9 @@ public class EnfriamientoSimulado {
         SEED = a;
         rand = new Random(SEED);
         solES = new Solucion[P2.NUMP];
-        convergencia = new ListaN[P2.NUMP];
+        convergencia = new Lista[P2.NUMP];
         for (int i = 0; i < P2.NUMP; i++) {
-            convergencia[i] = new ListaN();
+            convergencia[i] = new Lista<Integer>();
         }
     }
 
@@ -48,7 +48,7 @@ public class EnfriamientoSimulado {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int cam = P[2];
-        ListaN listaPal = P2.listaPal.get(tamP);
+        Lista listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
         int filas = listaDist.filas;
 

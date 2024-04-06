@@ -30,7 +30,7 @@ public class Solucion {
         mov = a;
     }
 
-    public static Solucion genRandom(int cam, ListaN listaPal, Random rand) {
+    public static Solucion genRandom(int cam, Lista<Integer> listaPal, Random rand) {
         Matriz matriz = new Matriz(cam, P2.MAXPAL, -1);
 
         int[] palxcam = new int[cam];
@@ -143,7 +143,7 @@ public class Solucion {
         return (new Solucion(matriz));
     }
 
-    public static Solucion genTaboo(int cam, Solucion s, Random rand, ListaM listaTaboo) {
+    public static Solucion genTaboo(int cam, Solucion s, Random rand, Lista<Movimiento> listaTaboo) {
 
         Movimiento nuevo = new Movimiento(rand, cam);
         while (listaTaboo.contains(nuevo)) {
@@ -156,7 +156,7 @@ public class Solucion {
         return (new Solucion(matriz, nuevo));
     }
 
-    public static Solucion genMemoriaM(int cam, ListaN listaPal, int[][][] memoriaM) {
+    public static Solucion genMemoriaM(int cam, Lista<Integer> listaPal, int[][][] memoriaM) {
         Matriz matriz = new Matriz(cam, P2.MAXPAL, -1);
 
         for (int ite = 0; ite < listaPal.size(); ite++) {
@@ -187,7 +187,7 @@ public class Solucion {
         return (new Solucion(matriz));
     }
 
-    public static Solucion genMemoriaC(int cam, ListaN listaPal, int[][] memoriaC) {
+    public static Solucion genMemoriaC(int cam, Lista<Integer> listaPal, int[][] memoriaC) {
         Matriz matriz = new Matriz(cam, P2.MAXPAL, -1);
 
         for (int ite = 0; ite < listaPal.size(); ite++) {
@@ -221,7 +221,7 @@ public class Solucion {
     public static int funCoste(Solucion s, Matriz listaDist) {
         int coste = 0;
         for (int i = 0; i < s.m.filas; i++) {
-            ListaN visitadas = new ListaN();
+            Lista<Integer> visitadas = new Lista<>();
             int actual = 0;
             visitadas.add(actual);
             int[] camion = s.m.m[i];

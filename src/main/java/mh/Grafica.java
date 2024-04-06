@@ -17,7 +17,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class Grafica extends JFrame {
 
-    public Grafica(ListaN datos, String nombre) {
+    public Grafica(Lista<Integer> datos, String nombre) {
         //crear la grafica
         XYPlot plot = new XYPlot();
 
@@ -49,7 +49,7 @@ public class Grafica extends JFrame {
         setContentPane(panel);
     }
 
-    private XYDataset createDataset(ListaN datos, String nombre) {
+    private XYDataset createDataset(Lista<Integer> datos, String nombre) {
         XYSeriesCollection dataset = new XYSeriesCollection();
         XYSeries series = new XYSeries(nombre);
         for (int i = 0; i < datos.size(); i++) {
