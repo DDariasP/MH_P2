@@ -221,6 +221,37 @@ public class Solucion {
         return (new Solucion(matriz));
     }
 
+    public static Solucion genMutacion(int cam, Solucion s, Random rand) {
+        Matriz matriz = new Matriz(s.m);
+
+        int x1, x2, y1, y2, y3, y4;
+
+        x1 = rand.nextInt(cam);
+        x2 = rand.nextInt(cam);
+        while (x2 == x1) {
+            x2 = rand.nextInt(cam);
+        }
+
+        y1 = rand.nextInt(P2.MAXPAL);
+        y2 = rand.nextInt(P2.MAXPAL);
+        while (y2 == y1 || Math.abs(y2 - y1) > 4) {
+            y2 = rand.nextInt(P2.MAXPAL);
+        }
+        y3 = rand.nextInt(P2.MAXPAL);
+        y4 = rand.nextInt(P2.MAXPAL);
+        while (y4 == y3 || Math.abs(y4 - y3) > 4) {
+            y4 = rand.nextInt(P2.MAXPAL);
+        }
+
+        Movimiento nuevo;
+        nuevo = new Movimiento(x1, y1, x2, y3);
+        Movimiento.aplicar(nuevo, matriz);
+        nuevo = new Movimiento(x1, y2, x2, y4);
+        Movimiento.aplicar(nuevo, matriz);
+
+        return (new Solucion(matriz));
+    }
+
     public static int funCoste(Solucion s, Matriz listaDist) {
         int coste = 0;
         for (int i = 0; i < s.m.filas; i++) {

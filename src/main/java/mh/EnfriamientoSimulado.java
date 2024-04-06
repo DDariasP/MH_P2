@@ -9,14 +9,12 @@ import static javax.swing.WindowConstants.*;
  */
 public class EnfriamientoSimulado {
 
-    public static final int MAX = 5000;
     public final int SEED;
     public Random rand;
     public Solucion[] solES;
     public Lista[] convergencia;
 
     public static final double KA = 0.9;
-    public static final int VECIN = 100;
     public static final int KI = 50;
     public double T, delta, aceptacion, T0, sigma, lnCiu;
 
@@ -32,7 +30,7 @@ public class EnfriamientoSimulado {
 
     public void ejecutarES() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = MAX + " * n";
+            String muestra = P2.MAX + " * n";
             solES[i] = ES(i);
             System.out.println(solES[i].coste + "\t" + solES[i].eval);
             if (i == 2 && SEED == 333) {
@@ -80,7 +78,7 @@ public class EnfriamientoSimulado {
 
         T = T0;
         int eval = 0;
-        int maxeval = MAX * ciu;
+        int maxeval = P2.MAX * ciu;
         int enfr = 0;
         int maxenfr = KI * ciu;
 
@@ -101,7 +99,7 @@ public class EnfriamientoSimulado {
                 siguiente.coste = Solucion.funCoste(siguiente, listaDist);
                 eval++;
                 siguiente.eval = eval;
-                if (siguiente.eval % MAX == 0) {
+                if (siguiente.eval % P2.MAX == 0) {
                     convergencia[tamP].add(siguiente.coste);
                 }
                 siguiente.T0 = T0;
@@ -114,7 +112,7 @@ public class EnfriamientoSimulado {
                     actual = siguiente;
 
                 }
-                if (vecindario == VECIN - 1) {
+                if (vecindario == P2.VECIN - 1) {
                     T = KA * T;
                     enfr++;
                     break;
@@ -180,7 +178,7 @@ public class EnfriamientoSimulado {
         inicial.TF = T0;
         inicial.enfr = enfr;
         convergencia.add(inicial.coste);
-        int muestra = maxiter / GRASP.RESTART;
+        int muestra = maxiter / P2.RESTART;
 
         Solucion actual = inicial;
         while (true) {
@@ -204,7 +202,7 @@ public class EnfriamientoSimulado {
                     actual = siguiente;
 
                 }
-                if (vecindario == GRASP.VECIN - 1) {
+                if (vecindario == P2.VECIN - 1) {
                     T = KA * T;
                     enfr++;
                     break;

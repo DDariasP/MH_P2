@@ -9,14 +9,11 @@ import static javax.swing.WindowConstants.*;
  */
 public class BusquedaTaboo {
 
-    public static final int MAX = 5000;
     public final int SEED;
     public Random rand;
     public Solucion[] solBT;
     public Lista[] convergencia;
 
-    public static final int RESTART = 10;
-    public static final int VECIN = 100;
     public static final double KRAND = 0.25;
     public static final double KGREED = 0.50;
     public static final double KREST = 0.25;
@@ -39,7 +36,7 @@ public class BusquedaTaboo {
 
     public void ejecutarBT() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = MAX + " * n";
+            String muestra = P2.MAX + " * n";
             solBT[i] = BT(i);
             System.out.println(solBT[i].coste + "\t" + solBT[i].eval);
             if (i == 2 && SEED == 333) {
@@ -57,9 +54,9 @@ public class BusquedaTaboo {
         int ciu = P[0];
         int cam = P[2];
         int eval = 0;
-        int maxeval = MAX * ciu;
+        int maxeval = P2.MAX * ciu;
         int iter = 0;
-        int maxiter = maxeval / RESTART;
+        int maxiter = maxeval / P2.RESTART;
         int reini = 0;
         int vecindario = 0;
         Lista listaPal = P2.listaPal.get(tamP);
@@ -90,7 +87,7 @@ public class BusquedaTaboo {
         double[] probAcum = {KRAND, KRAND + KGREED, KRAND + KGREED + KREST};
         convergencia[tamP].add(inicial.coste);
 
-        while (eval < maxeval && reini < RESTART) {
+        while (eval < maxeval && reini < P2.RESTART) {
             //Limpiando la lista tabu
             listaTaboo = new Lista<>();
             if (reini > 0) {
@@ -133,12 +130,12 @@ public class BusquedaTaboo {
             iter = 0;
             while (iter < maxiter) {
                 vecindario = 0;
-                while (vecindario < VECIN) {
+                while (vecindario < P2.VECIN) {
                     siguiente = Solucion.genTaboo(cam, actual, rand, listaTaboo);
                     siguiente.coste = Solucion.funCoste(siguiente, listaDist);
                     eval++;
                     siguiente.eval = eval;
-                    if (siguiente.eval % MAX == 0) {
+                    if (siguiente.eval % P2.MAX == 0) {
                         convergencia[tamP].add(siguiente.coste);
                     }
                     iter++;
@@ -173,7 +170,7 @@ public class BusquedaTaboo {
         eval++;
         inicial.eval = eval;
         convergencia.add(inicial.coste);
-        int muestra = maxiter / GRASP.RESTART;
+        int muestra = maxiter / P2.RESTART;
         Solucion actual, siguiente, mejor;
         if (elite.coste > inicial.coste) {
             elite = inicial;
@@ -186,7 +183,7 @@ public class BusquedaTaboo {
             actual = inicial;
             mejor = new Solucion(new Matriz(1, 1, 0));
             vecindario = 0;
-            while (vecindario < GRASP.VECIN) {
+            while (vecindario < P2.VECIN) {
                 siguiente = Solucion.genTaboo(cam, actual, rand, listaTaboo);
                 siguiente.coste = Solucion.funCoste(siguiente, listaDist);
                 iter++;

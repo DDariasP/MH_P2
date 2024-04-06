@@ -9,7 +9,6 @@ import static javax.swing.WindowConstants.*;
  */
 public class BusquedaLocal {
 
-    public static final int MAX = 5000;
     public final int SEED;
     public Random rand;
     public Solucion[] solBL;
@@ -27,7 +26,7 @@ public class BusquedaLocal {
 
     public void ejecutarBL() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = MAX + " * n";
+            String muestra = P2.MAX + " * n";
             solBL[i] = BL(i);
             System.out.println(solBL[i].coste + "\t" + solBL[i].eval);
             if (i == 2 && SEED == 333) {
@@ -45,7 +44,7 @@ public class BusquedaLocal {
         int ciu = P[0];
         int cam = P[2];
         int eval = 0;
-        int maxeval = MAX * ciu;
+        int maxeval = P2.MAX * ciu;
         Lista listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
 
@@ -61,7 +60,7 @@ public class BusquedaLocal {
             siguiente.coste = Solucion.funCoste(siguiente, listaDist);
             eval++;
             siguiente.eval = eval;
-            if (siguiente.eval % MAX == 0) {
+            if (siguiente.eval % P2.MAX == 0) {
                 convergencia[tamP].add(siguiente.coste);
             }
             if (actual.coste > siguiente.coste) {
@@ -84,13 +83,43 @@ public class BusquedaLocal {
         eval++;
         inicial.eval = eval;
         convergencia.add(inicial.coste);
-        int muestra = maxiter / GRASP.RESTART;
+        int muestra = maxiter / P2.RESTART;
 
         Solucion actual = inicial;
         while (iter < maxiter) {
             Solucion siguiente = Solucion.gen4opt(cam, actual, rand);
             siguiente.coste = Solucion.funCoste(siguiente, listaDist);
             iter++;
+            eval++;
+            siguiente.eval = eval;
+            if (siguiente.eval % muestra == 0) {
+                convergencia.add(siguiente.coste);
+            }
+            if (actual.coste > siguiente.coste) {
+                actual = siguiente;
+            }
+        }
+
+        actual.lasteval = eval;
+        return actual;
+    }
+
+    public static Solucion BLF(Random rand, int tamP, int maxeval, Solucion inicial, Lista<Integer> convergencia) {
+        int[] P = P2.P[tamP];
+        int cam = P[2];
+        int eval = inicial.eval;
+        Matriz listaDist = P2.listaDist.get(tamP);
+
+        inicial.coste = Solucion.funCoste(inicial, listaDist);
+        eval++;
+        inicial.eval = eval;
+        int muestra = P2.MAX;
+
+        Solucion actual = inicial;
+        Solucion siguiente = inicial;
+        while (eval < maxeval && actual.coste >= siguiente.coste) {
+            siguiente = Solucion.gen4opt(cam, actual, rand);
+            siguiente.coste = Solucion.funCoste(siguiente, listaDist);
             eval++;
             siguiente.eval = eval;
             if (siguiente.eval % muestra == 0) {

@@ -2,7 +2,6 @@ package mh;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;

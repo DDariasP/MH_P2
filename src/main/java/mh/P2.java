@@ -8,6 +8,9 @@ import java.util.ArrayList;
  */
 public class P2 {
 
+    public static final int MAX = 5000;
+    public static final int RESTART = 10;
+    public static final int VECIN = 100;
     public static final int MAXPAL = 14;
     public static final int NUMP = 3;
     public static final int[][] P = {{25, 84, 6}, {38, 126, 9}, {50, 168, 12}};
@@ -37,93 +40,126 @@ public class P2 {
             listaPal.add(Parser.leerPal("destinos_palets_" + pal + ".txt"));
         }
 
-//        System.out.println("BV");
-//        BusquedaVoraz bv = new BusquedaVoraz();
-//        System.out.println("---------------------");
-//        bv.ejecutarBV();
-//        System.out.println("---------------------");
-//        System.out.println("");
-//      
-//        System.out.println("BA");
-//        BusquedaAleatoria[] ba = new BusquedaAleatoria[SEED.length];
-//        System.out.println("---------------------");
-//        for (int i = 0; i < SEED.length; i++) {
-//            ba[i] = new BusquedaAleatoria(SEED[i]);
-//            ba[i].ejecutarBA();
-//            System.out.println("---------------------");
-//        }
-//        System.out.println("");
-//
-//        System.out.println("BL");
-//        BusquedaLocal[] bl = new BusquedaLocal[SEED.length];
-//        System.out.println("---------------------");
-//        for (int i = 0; i < SEED.length; i++) {
-//            bl[i] = new BusquedaLocal(SEED[i]);
-//            bl[i].ejecutarBL();
-//            System.out.println("---------------------");
-//        }
-//        System.out.println("");
-//
-//        System.out.println("ES");
-//        EnfriamientoSimulado[] es = new EnfriamientoSimulado[SEED.length];
-//        System.out.println("---------------------");
-//        for (int i = 0; i < SEED.length; i++) {
-//            es[i] = new EnfriamientoSimulado(SEED[i]);
-//            es[i].ejecutarES();
-//            System.out.println("---------------------");
-//        }
-//        System.out.println("");
-//
-//        System.out.println("BT");
-//        BusquedaTaboo[] bt = new BusquedaTaboo[SEED.length];
-//        System.out.println("---------------------");
-//        for (int i = 0; i < SEED.length; i++) {
-//            bt[i] = new BusquedaTaboo(SEED[i]);
-//            bt[i].ejecutarBT();
-//            System.out.println("---------------------");
-//        }
-//        System.out.println("");
-//
-//        System.out.println("GRASP-BL");
-//        GRASP[] gbl = new GRASP[SEED.length];
-//        System.out.println("---------------------");
-//        for (int i = 0; i < SEED.length; i++) {
-//            gbl[i] = new GRASP(SEED[i]);
-//            gbl[i].ejecutarBL();
-//            System.out.println("---------------------");
-//        }
-//        
-//        System.out.println("");
-//        System.out.println("GRASP-ES");
-//        GRASP[] ges = new GRASP[SEED.length];
-//        System.out.println("---------------------");
-//        for (int i = 0; i < SEED.length; i++) {
-//            ges[i] = new GRASP(SEED[i]);
-//            ges[i].ejecutarES();
-//            System.out.println("---------------------");
-//        }
-//        
-//        System.out.println("");
-//        System.out.println("GRASP-BT");
-//        GRASP[] gbt = new GRASP[SEED.length];
-//        System.out.println("---------------------");
-//        for (int i = 0; i < SEED.length; i++) {
-//            gbt[i] = new GRASP(SEED[i]);
-//            gbt[i].ejecutarBT();
-//            System.out.println("---------------------");
-//        }
-//        System.out.println("");
-//
-//        ArrayList<Object> resultados = new ArrayList<>();
-//        resultados.add(bv);
-//        resultados.add(ba);
-//        resultados.add(bl);
-//        resultados.add(es);
-//        resultados.add(bt);
-//        resultados.add(gbl);
-//        resultados.add(ges);
-//        resultados.add(gbt);
-//
-//        Parser.escribir("RESULTADOS.txt", resultados);
+        System.out.println("BV");
+        BusquedaVoraz bv = new BusquedaVoraz();
+        System.out.println("---------------------");
+        bv.ejecutarBV();
+        System.out.println("---------------------");
+        System.out.println("");
+
+        System.out.println("BA");
+        BusquedaAleatoria[] ba = new BusquedaAleatoria[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            ba[i] = new BusquedaAleatoria(SEED[i]);
+            ba[i].ejecutarBA();
+            System.out.println("---------------------");
+        }
+        System.out.println("");
+
+        System.out.println("BL");
+        BusquedaLocal[] bl = new BusquedaLocal[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            bl[i] = new BusquedaLocal(SEED[i]);
+            bl[i].ejecutarBL();
+            System.out.println("---------------------");
+        }
+        System.out.println("");
+
+        System.out.println("ES");
+        EnfriamientoSimulado[] es = new EnfriamientoSimulado[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            es[i] = new EnfriamientoSimulado(SEED[i]);
+            es[i].ejecutarES();
+            System.out.println("---------------------");
+        }
+        System.out.println("");
+
+        System.out.println("BT");
+        BusquedaTaboo[] bt = new BusquedaTaboo[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            bt[i] = new BusquedaTaboo(SEED[i]);
+            bt[i].ejecutarBT();
+            System.out.println("---------------------");
+        }
+        System.out.println("");
+
+        System.out.println("GRASP-BL");
+        GRASP[] gbl = new GRASP[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            gbl[i] = new GRASP(SEED[i]);
+            gbl[i].ejecutarBL();
+            System.out.println("---------------------");
+        }
+
+        System.out.println("");
+        System.out.println("GRASP-ES");
+        GRASP[] ges = new GRASP[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            ges[i] = new GRASP(SEED[i]);
+            ges[i].ejecutarES();
+            System.out.println("---------------------");
+        }
+
+        System.out.println("");
+        System.out.println("GRASP-BT");
+        GRASP[] gbt = new GRASP[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            gbt[i] = new GRASP(SEED[i]);
+            gbt[i].ejecutarBT();
+            System.out.println("---------------------");
+        }
+
+        System.out.println("");
+        System.out.println("ILS-BLF");
+        ILS[] sbl = new ILS[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            sbl[i] = new ILS(SEED[i]);
+            sbl[i].ejecutarBLF();
+            System.out.println("---------------------");
+        }
+
+        System.out.println("");
+        System.out.println("ILS-ES");
+        ILS[] ses = new ILS[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            ses[i] = new ILS(SEED[i]);
+            ses[i].ejecutarES();
+            System.out.println("---------------------");
+        }
+
+        System.out.println("");
+        System.out.println("ILS-BT");
+        ILS[] sbt = new ILS[SEED.length];
+        System.out.println("---------------------");
+        for (int i = 0; i < SEED.length; i++) {
+            sbt[i] = new ILS(SEED[i]);
+            sbt[i].ejecutarBT();
+            System.out.println("---------------------");
+        }
+        System.out.println("");
+
+        ArrayList<Object> resultados = new ArrayList<>();
+        resultados.add(bv);
+        resultados.add(ba);
+        resultados.add(bl);
+        resultados.add(es);
+        resultados.add(bt);
+        resultados.add(gbl);
+        resultados.add(ges);
+        resultados.add(gbt);
+        resultados.add(sbl);
+        resultados.add(ses);
+        resultados.add(sbt);
+
+        Parser.escribir("RESULTADOS.txt", resultados);
     }
 }

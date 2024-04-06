@@ -9,23 +9,19 @@ import static javax.swing.WindowConstants.*;
  */
 public class GRASP {
     
-    public static final int MAX = 5000;
     public final int SEED;
     public Random rand;
     public Solucion[] solGP;
     public Lista[][] convergencia;
     public Lista<Solucion> listaElite;
     
-    public static final int RESTART = 10;
-    public static final int VECIN = 100;
-    
     public GRASP(int a) {
         SEED = a;
         rand = new Random(SEED);
         solGP = new Solucion[P2.NUMP];
-        convergencia = new Lista[P2.NUMP][RESTART];
+        convergencia = new Lista[P2.NUMP][P2.RESTART];
         for (int i = 0; i < P2.NUMP; i++) {
-            for (int j = 0; j < RESTART; j++) {
+            for (int j = 0; j < P2.RESTART; j++) {
                 convergencia[i][j] = new Lista<Integer>();
             }
         }
@@ -33,7 +29,7 @@ public class GRASP {
     
     public void ejecutarBL() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = (MAX / RESTART / RESTART) + " * n";
+            String muestra = (P2.MAX / P2.RESTART / P2.RESTART) + " * n";
             solGP[i] = BL(i);
             System.out.println(solGP[i].coste + "\t" + solGP[i].eval + "\tn=" + listaElite.count(solGP[i]));
             if (i == 2 && SEED == 333) {
@@ -49,13 +45,13 @@ public class GRASP {
     public Solucion BL(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
-        int maxeval = MAX * ciu;
-        int maxiter = maxeval / RESTART;
+        int maxeval = P2.MAX * ciu;
+        int maxiter = maxeval / P2.RESTART;
         
         int lasteval = -1;
         Solucion elite = new Solucion(new Matriz(1, 1, 0));
         listaElite = new Lista<>();
-        for (int i = 0; i < RESTART; i++) {
+        for (int i = 0; i < P2.RESTART; i++) {
 //            Solucion inicial = LRCCamiones(tamP);
             Solucion inicial = LRCPalets(tamP);
             inicial.eval = lasteval;
@@ -72,7 +68,7 @@ public class GRASP {
     
     public void ejecutarES() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = (MAX / RESTART / RESTART) + " * n";
+            String muestra = (P2.MAX / P2.RESTART / P2.RESTART) + " * n";
             solGP[i] = ES(i);
             System.out.println(solGP[i].coste + "\t" + solGP[i].eval + "\tn=" + listaElite.count(solGP[i]));
             if (i == 2 && SEED == 333) {
@@ -88,13 +84,13 @@ public class GRASP {
     public Solucion ES(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
-        int maxeval = MAX * ciu;
-        int maxiter = maxeval / RESTART;
+        int maxeval = P2.MAX * ciu;
+        int maxiter = maxeval / P2.RESTART;
         
         int lasteval = -1;
         Solucion elite = new Solucion(new Matriz(1, 1, 0));
         listaElite = new Lista<>();
-        for (int i = 0; i < RESTART; i++) {
+        for (int i = 0; i < P2.RESTART; i++) {
 //            Solucion inicial = LRCCamiones(tamP);
             Solucion inicial = LRCPalets(tamP);
             inicial.eval = lasteval;
@@ -111,7 +107,7 @@ public class GRASP {
     
     public void ejecutarBT() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = (MAX / RESTART / RESTART) + " * n";
+            String muestra = (P2.MAX / P2.RESTART / P2.RESTART) + " * n";
             solGP[i] = BT(i);
             System.out.println(solGP[i].coste + "\t" + solGP[i].eval + "\tn=" + listaElite.count(solGP[i]));
             if (i == 2 && SEED == 333) {
@@ -127,14 +123,14 @@ public class GRASP {
     public Solucion BT(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
-        int maxeval = MAX * ciu;
-        int maxiter = maxeval / RESTART;
+        int maxeval = P2.MAX * ciu;
+        int maxiter = maxeval / P2.RESTART;
         
         int lasteval = -1;
         double tenencia = 4.0;
         Solucion elite = new Solucion(new Matriz(1, 1, 0));
         listaElite = new Lista<>();
-        for (int i = 0; i < RESTART; i++) {
+        for (int i = 0; i < P2.RESTART; i++) {
             if (i > 0) {
                 if (rand.nextBoolean()) {
                     tenencia = Math.round(tenencia + tenencia * BusquedaTaboo.KSIZE);
@@ -241,7 +237,7 @@ public class GRASP {
                 int limite = (int) (0.1 * listaPal.size());
                 Candidato elegido = null;
                 while (elegido == null) {
-                    int pos = -1;
+                    int pos;
                     if (limite <= 0) {
                         pos = 0;
                     } else {

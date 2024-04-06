@@ -9,7 +9,6 @@ import static javax.swing.WindowConstants.*;
  */
 public class BusquedaAleatoria {
 
-    public static final int MAX = 5000;
     public final int SEED;
     public Random rand;
     public Solucion[] solBA;
@@ -27,7 +26,7 @@ public class BusquedaAleatoria {
 
     public void ejecutarBA() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = MAX + " * n";
+            String muestra = P2.MAX + " * n";
             solBA[i] = BA(i);
             System.out.println(solBA[i].coste + "\t" + solBA[i].eval);
             if (i == 2 && SEED == 333) {
@@ -45,7 +44,7 @@ public class BusquedaAleatoria {
         int ciu = P[0];
         int cam = P[2];
         int eval = 0;
-        int maxeval = MAX * ciu;
+        int maxeval = P2.MAX * ciu;
         Lista listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
 
@@ -61,7 +60,7 @@ public class BusquedaAleatoria {
             siguiente.coste = Solucion.funCoste(siguiente, listaDist);
             eval++;
             siguiente.eval = eval;
-            if (siguiente.eval % MAX == 0) {
+            if (siguiente.eval % P2.MAX == 0) {
                 convergencia[tamP].add(siguiente.coste);
             }
             if (actual.coste > siguiente.coste) {

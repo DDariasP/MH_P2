@@ -15,13 +15,6 @@ public class Lista<T> {
         lista = new ArrayList<>();
     }
 
-    Lista(Lista<T> obj) {
-        lista = new ArrayList<>();
-        for (int i = 0; i < obj.size(); i++) {
-            lista.add(obj.get(i));
-        }
-    }
-
     public void add(T obj) {
         lista.add(obj);
     }

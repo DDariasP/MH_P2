@@ -75,7 +75,7 @@ public class Parser {
             }
             writer.write("\n---------------------");
 
-            writer.write("\nBA - n*" + BusquedaAleatoria.MAX);
+            writer.write("\nBA - n*" + P2.MAX);
             writer.write("\n---------------------");
             BusquedaAleatoria[] ba = (BusquedaAleatoria[]) lista.get(1);
             for (int i = 0; i < P2.SEED.length; i++) {
@@ -86,7 +86,7 @@ public class Parser {
             }
             writer.write("\n---------------------");
 
-            writer.write("\nBL - n*" + BusquedaLocal.MAX);
+            writer.write("\nBL - n*" + P2.MAX);
             writer.write("\n---------------------");
             BusquedaLocal[] bl = (BusquedaLocal[]) lista.get(2);
             for (int i = 0; i < P2.SEED.length; i++) {
@@ -97,7 +97,7 @@ public class Parser {
             }
             writer.write("\n---------------------");
 
-            writer.write("\nES - n*" + EnfriamientoSimulado.MAX);
+            writer.write("\nES - n*" + P2.MAX);
             writer.write("\n---------------------");
             EnfriamientoSimulado[] es = (EnfriamientoSimulado[]) lista.get(3);
             for (int i = 0; i < P2.SEED.length; i++) {
@@ -108,7 +108,7 @@ public class Parser {
             }
             writer.write("\n---------------------");
 
-            writer.write("\nBT - n*" + BusquedaTaboo.MAX);
+            writer.write("\nBT - n*" + P2.MAX);
             writer.write("\n---------------------");
             BusquedaTaboo[] bt = (BusquedaTaboo[]) lista.get(4);
             for (int i = 0; i < P2.SEED.length; i++) {
@@ -119,7 +119,7 @@ public class Parser {
             }
             writer.write("\n---------------------");
 
-            writer.write("\nGRASP-BL - n*" + GRASP.MAX);
+            writer.write("\nGRASP-BL - n*" + P2.MAX);
             writer.write("\n---------------------");
             GRASP[] gbl = (GRASP[]) lista.get(5);
             for (int i = 0; i < P2.SEED.length; i++) {
@@ -130,7 +130,7 @@ public class Parser {
             }
             writer.write("\n---------------------");
 
-            writer.write("\nGRASP-ES - n*" + GRASP.MAX);
+            writer.write("\nGRASP-ES - n*" + P2.MAX);
             writer.write("\n---------------------");
             GRASP[] ges = (GRASP[]) lista.get(6);
             for (int i = 0; i < P2.SEED.length; i++) {
@@ -141,12 +141,45 @@ public class Parser {
             }
             writer.write("\n---------------------");
 
-            writer.write("\nGRASP-BT - n*" + GRASP.MAX);
+            writer.write("\nGRASP-BT - n*" + P2.MAX);
             writer.write("\n---------------------");
             GRASP[] gbt = (GRASP[]) lista.get(7);
             for (int i = 0; i < P2.SEED.length; i++) {
                 for (int j = 0; j < P2.NUMP; j++) {
                     writer.write("\n" + gbt[i].solGP[j].coste + "\t" + gbt[i].solGP[j].eval);
+                }
+                writer.write("\n---------------------");
+            }
+            writer.write("\n---------------------");
+
+            writer.write("\nILS-BL - n*" + P2.MAX);
+            writer.write("\n---------------------");
+            ILS[] sbl = (ILS[]) lista.get(8);
+            for (int i = 0; i < P2.SEED.length; i++) {
+                for (int j = 0; j < P2.NUMP; j++) {
+                    writer.write("\n" + sbl[i].solILS[j].coste + "\t" + sbl[i].solILS[j].eval);
+                }
+                writer.write("\n---------------------");
+            }
+            writer.write("\n---------------------");
+
+            writer.write("\nILS-ES - n*" + P2.MAX);
+            writer.write("\n---------------------");
+            ILS[] ses = (ILS[]) lista.get(9);
+            for (int i = 0; i < P2.SEED.length; i++) {
+                for (int j = 0; j < P2.NUMP; j++) {
+                    writer.write("\n" + ses[i].solILS[j].coste + "\t" + ses[i].solILS[j].eval);
+                }
+                writer.write("\n---------------------");
+            }
+            writer.write("\n---------------------");
+
+            writer.write("\nILS-BT - n*" + P2.MAX);
+            writer.write("\n---------------------");
+            ILS[] sbt = (ILS[]) lista.get(10);
+            for (int i = 0; i < P2.SEED.length; i++) {
+                for (int j = 0; j < P2.NUMP; j++) {
+                    writer.write("\n" + sbt[i].solILS[j].coste + "\t" + sbt[i].solILS[j].eval);
                 }
                 writer.write("\n---------------------");
             }
