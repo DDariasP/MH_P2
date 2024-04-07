@@ -8,13 +8,13 @@ import static javax.swing.WindowConstants.*;
  * @author diego
  */
 public class GRASP {
-    
+
     public final int SEED;
     public Random rand;
     public Solucion[] solGP;
     public Lista[][] convergencia;
     public Lista<Solucion> listaElite;
-    
+
     public GRASP(int a) {
         SEED = a;
         rand = new Random(SEED);
@@ -26,10 +26,10 @@ public class GRASP {
             }
         }
     }
-    
+
     public void ejecutarBL() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = (P2.MAX / P2.RESTART / P2.RESTART) + " * n";
+            String muestra = "1 : " + (P2.MAX / P2.RESTART / P2.RESTART);
             solGP[i] = BL(i);
             System.out.println(solGP[i].coste + "\t" + solGP[i].eval + "\tn=" + listaElite.count(solGP[i]));
             if (i == 2 && SEED == 333) {
@@ -41,13 +41,13 @@ public class GRASP {
             }
         }
     }
-    
+
     public Solucion BL(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int maxeval = P2.MAX * ciu;
         int maxiter = maxeval / P2.RESTART;
-        
+
         int lasteval = -1;
         Solucion elite = new Solucion(new Matriz(1, 1, 0));
         listaElite = new Lista<>();
@@ -62,13 +62,13 @@ public class GRASP {
             lasteval = tmp.lasteval;
             listaElite.add(tmp);
         }
-        
+
         return elite;
     }
-    
+
     public void ejecutarES() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = (P2.MAX / P2.RESTART / P2.RESTART) + " * n";
+            String muestra = "1 : " + (P2.MAX / P2.RESTART / P2.RESTART);
             solGP[i] = ES(i);
             System.out.println(solGP[i].coste + "\t" + solGP[i].eval + "\tn=" + listaElite.count(solGP[i]));
             if (i == 2 && SEED == 333) {
@@ -80,13 +80,13 @@ public class GRASP {
             }
         }
     }
-    
+
     public Solucion ES(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int maxeval = P2.MAX * ciu;
         int maxiter = maxeval / P2.RESTART;
-        
+
         int lasteval = -1;
         Solucion elite = new Solucion(new Matriz(1, 1, 0));
         listaElite = new Lista<>();
@@ -101,13 +101,13 @@ public class GRASP {
             lasteval = tmp.lasteval;
             listaElite.add(tmp);
         }
-        
+
         return elite;
     }
-    
+
     public void ejecutarBT() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = (P2.MAX / P2.RESTART / P2.RESTART) + " * n";
+            String muestra = "1 : " + (P2.MAX / P2.RESTART / P2.RESTART);
             solGP[i] = BT(i);
             System.out.println(solGP[i].coste + "\t" + solGP[i].eval + "\tn=" + listaElite.count(solGP[i]));
             if (i == 2 && SEED == 333) {
@@ -119,13 +119,13 @@ public class GRASP {
             }
         }
     }
-    
+
     public Solucion BT(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int maxeval = P2.MAX * ciu;
         int maxiter = maxeval / P2.RESTART;
-        
+
         int lasteval = -1;
         double tenencia = 4.0;
         Solucion elite = new Solucion(new Matriz(1, 1, 0));
@@ -148,25 +148,25 @@ public class GRASP {
             lasteval = tmp.lasteval;
             listaElite.add(tmp);
         }
-        
+
         return elite;
     }
-    
+
     public Solucion LRCCamiones(int tamP) {
         int[] P = P2.P[tamP];
         int cam = P[2];
         Lista<Integer> listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
-        
+
         int[] ultimopal = new int[cam];
         int[] palxcam = new int[cam];
         for (int i = 0; i < cam; i++) {
             ultimopal[i] = 1;
             palxcam[i] = 0;
         }
-        
+
         Matriz matriz = new Matriz(cam, P2.MAXPAL, -1);
-        
+
         for (int i = 0; i < listaPal.size(); i++) {
             int palet = listaPal.get(i);
             int ciupal = palet - 1;
@@ -175,7 +175,7 @@ public class GRASP {
                 int ciucam = ultimopal[j] - 1;
                 distcalc[j] = listaDist.m[ciucam][ciupal];
             }
-            
+
             Lista<Candidato> LRC = new Lista();
             for (int j = 0; j < cam; j++) {
                 if (palxcam[j] < P2.MAXPAL) {
@@ -183,7 +183,7 @@ public class GRASP {
                 }
             }
             Candidato.sort(LRC);
-            
+
             int limite = (int) (0.5 * cam);
             Candidato elegido = null;
             while (elegido == null) {
@@ -192,18 +192,18 @@ public class GRASP {
                     elegido = LRC.get(pos);
                 }
             }
-            
+
             matriz.m[elegido.id][palxcam[elegido.id]] = palet;
             ultimopal[elegido.id] = palet;
             palxcam[elegido.id]++;
 //            System.out.println("elegido=" + elegido.id);
 //            System.out.println(matriz);
         }
-        
+
         Solucion s = new Solucion(matriz);
         return s;
     }
-    
+
     public Solucion LRCPalets(int tamP) {
         int[] P = P2.P[tamP];
         int cam = P[2];
@@ -213,14 +213,14 @@ public class GRASP {
             listaPal.add(new Candidato(listaP.get(i), -1));
         }
         Matriz listaDist = P2.listaDist.get(tamP);
-        
+
         int[] ultimopal = new int[cam];
         for (int i = 0; i < cam; i++) {
             ultimopal[i] = 1;
         }
-        
+
         Matriz matriz = new Matriz(cam, P2.MAXPAL, -1);
-        
+
         for (int i = 0; i < P2.MAXPAL; i++) {
             for (int j = 0; j < cam; j++) {
                 int ciucam = ultimopal[j] - 1;
@@ -233,7 +233,7 @@ public class GRASP {
                     LRC.add(tmp);
                 }
                 Candidato.sort(LRC);
-                
+
                 int limite = (int) (0.1 * listaPal.size());
                 Candidato elegido = null;
                 while (elegido == null) {
@@ -248,14 +248,14 @@ public class GRASP {
                     }
                 }
                 listaPal.remove(elegido);
-                
+
                 matriz.m[j][i] = elegido.id;
                 ultimopal[j] = elegido.id;
 //                System.out.println("elegido=" + elegido.id);
 //                System.out.println(matriz);
             }
         }
-        
+
         Solucion s = new Solucion(matriz);
         return s;
     }

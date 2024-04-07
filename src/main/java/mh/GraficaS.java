@@ -16,7 +16,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class GraficaS extends JFrame {
 
-    public GraficaS(Lista<Integer> datos, String nombre, String muestra) {
+    public GraficaS(Lista<Integer> datos, String nombre, String muestra, Color pintura) {
         //crear la grafica
         XYPlot plot = new XYPlot();
 
@@ -24,7 +24,7 @@ public class GraficaS extends JFrame {
         XYDataset funcion = createDataset(datos, nombre);
         //caracteristicas de funcion
         XYItemRenderer renderer = new XYLineAndShapeRenderer(true, true);
-        renderer.setSeriesPaint(0, Color.GREEN);
+        renderer.setSeriesPaint(0, pintura);
         renderer.setSeriesStroke(0, new BasicStroke(2.0f));
         //añadir funcion a la grafica
         plot.setDataset(0, funcion);

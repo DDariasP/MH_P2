@@ -1,5 +1,6 @@
 package mh;
 
+import java.awt.Color;
 import java.util.Random;
 import static javax.swing.WindowConstants.*;
 
@@ -26,11 +27,11 @@ public class BusquedaLocal {
 
     public void ejecutarBL() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = P2.MAX + " * n";
+            String muestra = "1 : " + P2.MAX;
             solBL[i] = BL(i);
             System.out.println(solBL[i].coste + "\t" + solBL[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "BL", muestra);
+                GraficaS g = new GraficaS(convergencia[i], "BL", muestra, Color.CYAN);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BL - P" + (i + 1) + " - S" + SEED);
@@ -43,7 +44,7 @@ public class BusquedaLocal {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int cam = P[2];
-        int eval = 0;
+        int eval = -1;
         int maxeval = P2.MAX * ciu;
         Lista listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
@@ -86,8 +87,9 @@ public class BusquedaLocal {
         int muestra = maxiter / P2.RESTART;
 
         Solucion actual = inicial;
+        Solucion siguiente = inicial;
         while (iter < maxiter) {
-            Solucion siguiente = Solucion.gen4opt(cam, actual, rand);
+            siguiente = Solucion.gen4opt(cam, actual, rand);
             siguiente.coste = Solucion.funCoste(siguiente, listaDist);
             iter++;
             eval++;
@@ -100,6 +102,7 @@ public class BusquedaLocal {
             }
         }
 
+        convergencia.add(siguiente.coste);
         actual.lasteval = eval;
         return actual;
     }
@@ -114,6 +117,9 @@ public class BusquedaLocal {
         eval++;
         inicial.eval = eval;
         int muestra = P2.MAX;
+        if (inicial.eval % muestra == 0) {
+            convergencia.add(inicial.coste);
+        }
 
         Solucion actual = inicial;
         Solucion siguiente = inicial;

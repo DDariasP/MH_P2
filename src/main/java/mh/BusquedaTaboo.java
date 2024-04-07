@@ -1,5 +1,6 @@
 package mh;
 
+import java.awt.Color;
 import java.util.Random;
 import static javax.swing.WindowConstants.*;
 
@@ -36,11 +37,11 @@ public class BusquedaTaboo {
 
     public void ejecutarBT() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = P2.MAX + " * n";
+            String muestra = "1 : " + P2.MAX;
             solBT[i] = BT(i);
             System.out.println(solBT[i].coste + "\t" + solBT[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "BT", muestra);
+                GraficaS g = new GraficaS(convergencia[i], "BT", muestra, Color.MAGENTA);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BT - P" + (i + 1) + " - S" + SEED);
@@ -53,7 +54,7 @@ public class BusquedaTaboo {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int cam = P[2];
-        int eval = 0;
+        int eval = -1;
         int maxeval = P2.MAX * ciu;
         int iter = 0;
         int maxiter = maxeval / P2.RESTART;

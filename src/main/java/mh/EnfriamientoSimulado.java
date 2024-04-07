@@ -1,5 +1,6 @@
 package mh;
 
+import java.awt.Color;
 import java.util.Random;
 import static javax.swing.WindowConstants.*;
 
@@ -30,11 +31,11 @@ public class EnfriamientoSimulado {
 
     public void ejecutarES() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = P2.MAX + " * n";
+            String muestra = "1 : " + P2.MAX;
             solES[i] = ES(i);
             System.out.println(solES[i].coste + "\t" + solES[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "ES", muestra);
+                GraficaS g = new GraficaS(convergencia[i], "ES", muestra, Color.GREEN);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("ES - P" + (i + 1) + " - S" + SEED);
@@ -77,7 +78,7 @@ public class EnfriamientoSimulado {
         T0 = sigma / lnCiu;
 
         T = T0;
-        int eval = 0;
+        int eval = -1;
         int maxeval = P2.MAX * ciu;
         int enfr = 0;
         int maxenfr = KI * ciu;
@@ -92,10 +93,11 @@ public class EnfriamientoSimulado {
         convergencia[tamP].add(inicial.coste);
 
         Solucion actual = inicial;
+        Solucion siguiente;
         while (true) {
             int vecindario = 0;
             while (true) {
-                Solucion siguiente = Solucion.gen2optAlt(cam, actual, rand);
+                siguiente = Solucion.gen2optAlt(cam, actual, rand);
                 siguiente.coste = Solucion.funCoste(siguiente, listaDist);
                 eval++;
                 siguiente.eval = eval;
@@ -110,7 +112,6 @@ public class EnfriamientoSimulado {
                 aceptacion = rand.nextDouble();
                 if (delta < 0 || aceptacion < Math.exp(-delta / T)) {
                     actual = siguiente;
-
                 }
                 if (vecindario == P2.VECIN - 1) {
                     T = KA * T;
@@ -129,6 +130,7 @@ public class EnfriamientoSimulado {
             }
         }
 
+        convergencia[tamP].add(siguiente.coste);
         return actual;
     }
 
@@ -146,7 +148,6 @@ public class EnfriamientoSimulado {
                 int d = listaDist.m[i][j];
                 dividendo = dividendo + d;
                 divisor++;
-
             }
         }
         double media = dividendo / divisor;
@@ -157,7 +158,6 @@ public class EnfriamientoSimulado {
                 int d = listaDist.m[i][j];
                 double resta = d - media;
                 sumatorio = sumatorio + Math.pow(resta, 2);
-
             }
         }
         double sigma = Math.sqrt(sumatorio / divisor);
@@ -181,10 +181,11 @@ public class EnfriamientoSimulado {
         int muestra = maxiter / P2.RESTART;
 
         Solucion actual = inicial;
+        Solucion siguiente;
         while (true) {
             int vecindario = 0;
             while (true) {
-                Solucion siguiente = Solucion.gen2optAlt(cam, actual, rand);
+                siguiente = Solucion.gen2optAlt(cam, actual, rand);
                 siguiente.coste = Solucion.funCoste(siguiente, listaDist);
                 iter++;
                 eval++;
@@ -200,7 +201,6 @@ public class EnfriamientoSimulado {
                 double aceptacion = rand.nextDouble();
                 if (delta < 0 || aceptacion < Math.exp(-delta / T)) {
                     actual = siguiente;
-
                 }
                 if (vecindario == P2.VECIN - 1) {
                     T = KA * T;
@@ -219,6 +219,9 @@ public class EnfriamientoSimulado {
             }
         }
 
+        if (inicial.eval == 0) {
+            convergencia.add(siguiente.coste);
+        }
         actual.lasteval = eval;
         return actual;
     }

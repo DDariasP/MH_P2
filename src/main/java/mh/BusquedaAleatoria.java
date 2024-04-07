@@ -1,5 +1,6 @@
 package mh;
 
+import java.awt.Color;
 import java.util.Random;
 import static javax.swing.WindowConstants.*;
 
@@ -26,11 +27,11 @@ public class BusquedaAleatoria {
 
     public void ejecutarBA() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = P2.MAX + " * n";
+            String muestra = "1 : " + P2.MAX;
             solBA[i] = BA(i);
             System.out.println(solBA[i].coste + "\t" + solBA[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "BA", muestra);
+                GraficaS g = new GraficaS(convergencia[i], "BA", muestra, Color.YELLOW);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BA - P" + (i + 1) + " - S" + SEED);
@@ -43,7 +44,7 @@ public class BusquedaAleatoria {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int cam = P[2];
-        int eval = 0;
+        int eval = -1;
         int maxeval = P2.MAX * ciu;
         Lista listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);

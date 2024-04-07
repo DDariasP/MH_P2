@@ -1,5 +1,6 @@
 package mh;
 
+import java.awt.Color;
 import java.util.Random;
 import static javax.swing.WindowConstants.*;
 
@@ -29,11 +30,11 @@ public class ILS {
 
     public void ejecutarBLF() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = P2.MAX + " * n";
+            String muestra = "1 : " + P2.MAX;
             solILS[i] = BLF(i);
             System.out.println(solILS[i].coste + "\t" + solILS[i].eval + "\tn=" + listaElite.count(solILS[i]));
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i][0], "ILS-BLF", muestra);
+                GraficaS g = new GraficaS(convergencia[i][0], "ILS-BLF", muestra, Color.RED);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 500);
                 g.setTitle("ILS-BLF - P" + (i + 1) + " - S" + SEED);
@@ -77,7 +78,7 @@ public class ILS {
 
     public void ejecutarES() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = (P2.MAX / P2.RESTART / P2.RESTART) + " * n";
+            String muestra = "1 : " + (P2.MAX / P2.RESTART / P2.RESTART);
             solILS[i] = ES(i);
             System.out.println(solILS[i].coste + "\t" + solILS[i].eval + "\tn=" + listaElite.count(solILS[i]));
             if (i == 2 && SEED == 333) {
@@ -122,7 +123,7 @@ public class ILS {
 
     public void ejecutarBT() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = (P2.MAX / P2.RESTART / P2.RESTART) + " * n";
+            String muestra = "1 : " + (P2.MAX / P2.RESTART / P2.RESTART);
             solILS[i] = BT(i);
             System.out.println(solILS[i].coste + "\t" + solILS[i].eval + "\tn=" + listaElite.count(solILS[i]));
             if (i == 2 && SEED == 333) {
