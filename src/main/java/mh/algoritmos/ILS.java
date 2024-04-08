@@ -1,6 +1,7 @@
-package mh;
+package mh.algoritmos;
 
-import java.awt.Color;
+import mh.*;
+import mh.tipos.*;
 import java.util.Random;
 import static javax.swing.WindowConstants.*;
 
@@ -28,34 +29,31 @@ public class ILS {
         }
     }
 
-    public void ejecutarBLF() {
+    public void ejecutarBL() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = "1 : " + P2.MAX;
-            solILS[i] = BLF(i);
+            solILS[i] = BL(i);
             System.out.println(solILS[i].coste + "\t" + solILS[i].eval + "\tn=" + listaElite.count(solILS[i]));
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i][0], "ILS-BLF", muestra, Color.RED);
+                GraficaM g = new GraficaM(convergencia[i], "ILS-BL");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 500);
-                g.setTitle("ILS-BLF - P" + (i + 1) + " - S" + SEED);
+                g.setTitle("ILS-BL - P" + (i + 1) + " - S" + SEED);
                 g.setVisible(true);
             }
         }
     }
 
-    public Solucion BLF(int tamP) {
+    public Solucion BL(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int cam = P[2];
-        int maxeval = P2.MAX * ciu;
+        int maxiter = P2.MAX * ciu;
         Lista listaPal = P2.listaPal.get(tamP);
-        Lista<Integer> conv = new Lista<>();
 
         int lasteval = -1;
         Solucion elite = new Solucion(new Matriz(1, 1, 0));
         listaElite = new Lista<>();
-        int i = 0;
-        while (lasteval < maxeval) {
+        for (int i = 0; i < P2.RESTART; i++) {
             Solucion inicial;
             if (i == 0) {
                 inicial = Solucion.genRandom(cam, listaPal, rand);
@@ -63,26 +61,23 @@ public class ILS {
                 inicial = Solucion.genMutacion(cam, elite, rand);
             }
             inicial.eval = lasteval;
-            Solucion tmp = BusquedaLocal.BLF(rand, tamP, maxeval, inicial, conv);
+            Solucion tmp = BusquedaLocal.BL(rand, tamP, maxiter, inicial, convergencia[tamP][i]);
             if (elite.coste > tmp.coste) {
                 elite = tmp;
             }
             lasteval = tmp.lasteval;
             listaElite.add(tmp);
-            i++;
         }
 
-        convergencia[tamP][0] = conv;
         return elite;
     }
 
     public void ejecutarES() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = "1 : " + (P2.MAX / P2.RESTART / P2.RESTART);
             solILS[i] = ES(i);
             System.out.println(solILS[i].coste + "\t" + solILS[i].eval + "\tn=" + listaElite.count(solILS[i]));
             if (i == 2 && SEED == 333) {
-                GraficaM g = new GraficaM(convergencia[i], "ILS-ES", muestra);
+                GraficaM g = new GraficaM(convergencia[i], "ILS-ES");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 500);
                 g.setTitle("ILS-ES - P" + (i + 1) + " - S" + SEED);
@@ -95,8 +90,7 @@ public class ILS {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int cam = P[2];
-        int maxeval = P2.MAX * ciu;
-        int maxiter = maxeval / P2.RESTART;
+        int maxiter = P2.MAX * ciu;
         Lista listaPal = P2.listaPal.get(tamP);
 
         int lasteval = -1;
@@ -123,11 +117,10 @@ public class ILS {
 
     public void ejecutarBT() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = "1 : " + (P2.MAX / P2.RESTART / P2.RESTART);
             solILS[i] = BT(i);
             System.out.println(solILS[i].coste + "\t" + solILS[i].eval + "\tn=" + listaElite.count(solILS[i]));
             if (i == 2 && SEED == 333) {
-                GraficaM g = new GraficaM(convergencia[i], "ILS-BT", muestra);
+                GraficaM g = new GraficaM(convergencia[i], "ILS-BT");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 500);
                 g.setTitle("ILS-BT - P" + (i + 1) + " - S" + SEED);
@@ -140,8 +133,7 @@ public class ILS {
         int[] P = P2.P[tamP];
         int ciu = P[0];
         int cam = P[2];
-        int maxeval = P2.MAX * ciu;
-        int maxiter = maxeval / P2.RESTART;
+        int maxiter = P2.MAX * ciu;
         Lista listaPal = P2.listaPal.get(tamP);
 
         int lasteval = -1;

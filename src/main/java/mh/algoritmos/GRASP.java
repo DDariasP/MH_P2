@@ -1,5 +1,7 @@
-package mh;
+package mh.algoritmos;
 
+import mh.*;
+import mh.tipos.*;
 import java.util.Random;
 import static javax.swing.WindowConstants.*;
 
@@ -29,11 +31,10 @@ public class GRASP {
 
     public void ejecutarBL() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = "1 : " + (P2.MAX / P2.RESTART / P2.RESTART);
             solGP[i] = BL(i);
             System.out.println(solGP[i].coste + "\t" + solGP[i].eval + "\tn=" + listaElite.count(solGP[i]));
             if (i == 2 && SEED == 333) {
-                GraficaM g = new GraficaM(convergencia[i], "GRASP-BL", muestra);
+                GraficaM g = new GraficaM(convergencia[i], "GRASP-BL");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 500);
                 g.setTitle("GRASP-BL - P" + (i + 1) + " - S" + SEED);
@@ -45,8 +46,7 @@ public class GRASP {
     public Solucion BL(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
-        int maxeval = P2.MAX * ciu;
-        int maxiter = maxeval / P2.RESTART;
+        int maxiter = P2.MAX * ciu;
 
         int lasteval = -1;
         Solucion elite = new Solucion(new Matriz(1, 1, 0));
@@ -68,11 +68,10 @@ public class GRASP {
 
     public void ejecutarES() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = "1 : " + (P2.MAX / P2.RESTART / P2.RESTART);
             solGP[i] = ES(i);
             System.out.println(solGP[i].coste + "\t" + solGP[i].eval + "\tn=" + listaElite.count(solGP[i]));
             if (i == 2 && SEED == 333) {
-                GraficaM g = new GraficaM(convergencia[i], "GRASP-ES", muestra);
+                GraficaM g = new GraficaM(convergencia[i], "GRASP-ES");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 500);
                 g.setTitle("GRASP-ES - P" + (i + 1) + " - S" + SEED);
@@ -84,8 +83,7 @@ public class GRASP {
     public Solucion ES(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
-        int maxeval = P2.MAX * ciu;
-        int maxiter = maxeval / P2.RESTART;
+        int maxiter = P2.MAX * ciu;
 
         int lasteval = -1;
         Solucion elite = new Solucion(new Matriz(1, 1, 0));
@@ -107,11 +105,10 @@ public class GRASP {
 
     public void ejecutarBT() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = "1 : " + (P2.MAX / P2.RESTART / P2.RESTART);
             solGP[i] = BT(i);
             System.out.println(solGP[i].coste + "\t" + solGP[i].eval + "\tn=" + listaElite.count(solGP[i]));
             if (i == 2 && SEED == 333) {
-                GraficaM g = new GraficaM(convergencia[i], "GRASP-BT", muestra);
+                GraficaM g = new GraficaM(convergencia[i], "GRASP-BT");
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 500);
                 g.setTitle("GRASP-BT - P" + (i + 1) + " - S" + SEED);
@@ -123,8 +120,7 @@ public class GRASP {
     public Solucion BT(int tamP) {
         int[] P = P2.P[tamP];
         int ciu = P[0];
-        int maxeval = P2.MAX * ciu;
-        int maxiter = maxeval / P2.RESTART;
+        int maxiter = P2.MAX * ciu;
 
         int lasteval = -1;
         double tenencia = 4.0;

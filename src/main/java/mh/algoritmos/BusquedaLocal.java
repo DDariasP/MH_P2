@@ -1,7 +1,9 @@
-package mh;
+package mh.algoritmos;
 
 import java.awt.Color;
 import java.util.Random;
+import mh.*;
+import mh.tipos.*;
 import static javax.swing.WindowConstants.*;
 
 /**
@@ -27,11 +29,10 @@ public class BusquedaLocal {
 
     public void ejecutarBL() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = "1 : " + P2.MAX;
             solBL[i] = BL(i);
             System.out.println(solBL[i].coste + "\t" + solBL[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "BL", muestra, Color.CYAN);
+                GraficaS g = new GraficaS(convergencia[i], "BL", Color.RED);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BL - P" + (i + 1) + " - S" + SEED);
@@ -61,7 +62,7 @@ public class BusquedaLocal {
             siguiente.coste = Solucion.funCoste(siguiente, listaDist);
             eval++;
             siguiente.eval = eval;
-            if (siguiente.eval % P2.MAX == 0) {
+            if (siguiente.eval % P2.MS == 0) {
                 convergencia[tamP].add(siguiente.coste);
             }
             if (actual.coste > siguiente.coste) {
@@ -84,7 +85,6 @@ public class BusquedaLocal {
         eval++;
         inicial.eval = eval;
         convergencia.add(inicial.coste);
-        int muestra = maxiter / P2.RESTART;
 
         Solucion actual = inicial;
         Solucion siguiente = inicial;
@@ -94,7 +94,7 @@ public class BusquedaLocal {
             iter++;
             eval++;
             siguiente.eval = eval;
-            if (siguiente.eval % muestra == 0) {
+            if (siguiente.eval % P2.MM == 0) {
                 convergencia.add(siguiente.coste);
             }
             if (actual.coste > siguiente.coste) {
@@ -103,39 +103,6 @@ public class BusquedaLocal {
         }
 
         convergencia.add(siguiente.coste);
-        actual.lasteval = eval;
-        return actual;
-    }
-
-    public static Solucion BLF(Random rand, int tamP, int maxeval, Solucion inicial, Lista<Integer> convergencia) {
-        int[] P = P2.P[tamP];
-        int cam = P[2];
-        int eval = inicial.eval;
-        Matriz listaDist = P2.listaDist.get(tamP);
-
-        inicial.coste = Solucion.funCoste(inicial, listaDist);
-        eval++;
-        inicial.eval = eval;
-        int muestra = P2.MAX;
-        if (inicial.eval % muestra == 0) {
-            convergencia.add(inicial.coste);
-        }
-
-        Solucion actual = inicial;
-        Solucion siguiente = inicial;
-        while (eval < maxeval && actual.coste >= siguiente.coste) {
-            siguiente = Solucion.gen4opt(cam, actual, rand);
-            siguiente.coste = Solucion.funCoste(siguiente, listaDist);
-            eval++;
-            siguiente.eval = eval;
-            if (siguiente.eval % muestra == 0) {
-                convergencia.add(siguiente.coste);
-            }
-            if (actual.coste > siguiente.coste) {
-                actual = siguiente;
-            }
-        }
-
         actual.lasteval = eval;
         return actual;
     }

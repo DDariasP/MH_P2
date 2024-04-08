@@ -1,6 +1,7 @@
-package mh;
+package mh.tipos;
 
 import java.util.Random;
+import mh.*;
 
 /**
  *
@@ -53,6 +54,16 @@ public class Movimiento {
 
         return (oriX == obj.oriX && oriY == obj.oriY
                 && destX == obj.destX && destY == obj.destY);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + this.oriX;
+        hash = 79 * hash + this.oriY;
+        hash = 79 * hash + this.destX;
+        hash = 79 * hash + this.destY;
+        return hash;
     }
 
     @Override

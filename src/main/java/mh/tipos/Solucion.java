@@ -1,6 +1,8 @@
-package mh;
+package mh.tipos;
 
+import java.util.Objects;
 import java.util.Random;
+import mh.*;
 
 /**
  *
@@ -286,6 +288,17 @@ public class Solucion {
         Solucion obj = (Solucion) o;
 
         return (m.equals(obj.m));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + this.eval;
+        hash = 23 * hash + this.lasteval;
+        hash = 23 * hash + Objects.hashCode(this.m);
+        hash = 23 * hash + this.coste;
+        hash = 23 * hash + Objects.hashCode(this.mov);
+        return hash;
     }
 
     @Override

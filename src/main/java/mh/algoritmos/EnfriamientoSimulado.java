@@ -1,7 +1,9 @@
-package mh;
+package mh.algoritmos;
 
 import java.awt.Color;
 import java.util.Random;
+import mh.*;
+import mh.tipos.*;
 import static javax.swing.WindowConstants.*;
 
 /**
@@ -31,11 +33,10 @@ public class EnfriamientoSimulado {
 
     public void ejecutarES() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = "1 : " + P2.MAX;
             solES[i] = ES(i);
             System.out.println(solES[i].coste + "\t" + solES[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "ES", muestra, Color.GREEN);
+                GraficaS g = new GraficaS(convergencia[i], "ES", Color.GREEN);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("ES - P" + (i + 1) + " - S" + SEED);
@@ -80,6 +81,7 @@ public class EnfriamientoSimulado {
         T = T0;
         int eval = -1;
         int maxeval = P2.MAX * ciu;
+        int vecindario = 1;
         int enfr = 0;
         int maxenfr = KI * ciu;
 
@@ -93,15 +95,15 @@ public class EnfriamientoSimulado {
         convergencia[tamP].add(inicial.coste);
 
         Solucion actual = inicial;
-        Solucion siguiente;
-        while (true) {
-            int vecindario = 0;
-            while (true) {
+        Solucion siguiente = inicial;
+        while (enfr < maxenfr && eval < maxeval) {
+            vecindario = 1;
+            while (vecindario < P2.VECIN && enfr < maxenfr && eval < maxeval) {
                 siguiente = Solucion.gen2optAlt(cam, actual, rand);
                 siguiente.coste = Solucion.funCoste(siguiente, listaDist);
                 eval++;
                 siguiente.eval = eval;
-                if (siguiente.eval % P2.MAX == 0) {
+                if (siguiente.eval % P2.MS == 0) {
                     convergencia[tamP].add(siguiente.coste);
                 }
                 siguiente.T0 = T0;
@@ -113,20 +115,10 @@ public class EnfriamientoSimulado {
                 if (delta < 0 || aceptacion < Math.exp(-delta / T)) {
                     actual = siguiente;
                 }
-                if (vecindario == P2.VECIN - 1) {
+                if (vecindario == P2.VECIN) {
                     T = KA * T;
                     enfr++;
-                    break;
                 }
-                if (eval == maxeval - 1) {
-                    break;
-                }
-            }
-            if (enfr == maxenfr - 1) {
-                break;
-            }
-            if (eval == maxeval - 1) {
-                break;
             }
         }
 
@@ -167,6 +159,7 @@ public class EnfriamientoSimulado {
         double T = T0;
         int iter = 0;
         int eval = inicial.eval;
+        int vecindario = 1;
         int enfr = 0;
         int maxenfr = KI * ciu;
 
@@ -178,19 +171,18 @@ public class EnfriamientoSimulado {
         inicial.TF = T0;
         inicial.enfr = enfr;
         convergencia.add(inicial.coste);
-        int muestra = maxiter / P2.RESTART;
 
         Solucion actual = inicial;
-        Solucion siguiente;
-        while (true) {
-            int vecindario = 0;
-            while (true) {
+        Solucion siguiente = inicial;
+        while (enfr < maxenfr && iter < maxiter) {
+            vecindario = 1;
+            while (vecindario < P2.VECIN && enfr < maxenfr && iter < maxiter) {
                 siguiente = Solucion.gen2optAlt(cam, actual, rand);
                 siguiente.coste = Solucion.funCoste(siguiente, listaDist);
                 iter++;
                 eval++;
                 siguiente.eval = eval;
-                if (siguiente.eval % muestra == 0) {
+                if (siguiente.eval % P2.MM == 0) {
                     convergencia.add(siguiente.coste);
                 }
                 siguiente.T0 = T0;
@@ -202,20 +194,10 @@ public class EnfriamientoSimulado {
                 if (delta < 0 || aceptacion < Math.exp(-delta / T)) {
                     actual = siguiente;
                 }
-                if (vecindario == P2.VECIN - 1) {
+                if (vecindario == P2.VECIN) {
                     T = KA * T;
                     enfr++;
-                    break;
                 }
-                if (iter == maxiter - 1) {
-                    break;
-                }
-            }
-            if (enfr == maxenfr - 1) {
-                break;
-            }
-            if (iter == maxiter - 1) {
-                break;
             }
         }
 

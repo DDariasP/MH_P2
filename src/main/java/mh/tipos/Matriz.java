@@ -1,4 +1,6 @@
-package mh;
+package mh.tipos;
+
+import java.util.Arrays;
 
 /**
  *
@@ -61,6 +63,15 @@ public class Matriz {
         }
 
         return iguales;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + this.filas;
+        hash = 37 * hash + this.columnas;
+        hash = 37 * hash + Arrays.deepHashCode(this.m);
+        return hash;
     }
 
     @Override

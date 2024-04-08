@@ -1,7 +1,9 @@
-package mh;
+package mh.algoritmos;
 
 import java.awt.Color;
 import java.util.Random;
+import mh.*;
+import mh.tipos.*;
 import static javax.swing.WindowConstants.*;
 
 /**
@@ -37,11 +39,10 @@ public class BusquedaTaboo {
 
     public void ejecutarBT() {
         for (int i = 0; i < P2.NUMP; i++) {
-            String muestra = "1 : " + P2.MAX;
             solBT[i] = BT(i);
             System.out.println(solBT[i].coste + "\t" + solBT[i].eval);
             if (i == 2 && SEED == 333) {
-                GraficaS g = new GraficaS(convergencia[i], "BT", muestra, Color.MAGENTA);
+                GraficaS g = new GraficaS(convergencia[i], "BT", Color.MAGENTA);
                 g.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 g.setBounds(200, 350, 800, 400);
                 g.setTitle("BT - P" + (i + 1) + " - S" + SEED);
@@ -56,10 +57,9 @@ public class BusquedaTaboo {
         int cam = P[2];
         int eval = -1;
         int maxeval = P2.MAX * ciu;
-        int iter = 0;
+        int iter, vecindario;
         int maxiter = maxeval / P2.RESTART;
         int reini = 0;
-        int vecindario = 0;
         Lista listaPal = P2.listaPal.get(tamP);
         Matriz listaDist = P2.listaDist.get(tamP);
 
@@ -89,7 +89,6 @@ public class BusquedaTaboo {
         convergencia[tamP].add(inicial.coste);
 
         while (eval < maxeval && reini < P2.RESTART) {
-            //Limpiando la lista tabu
             listaTaboo = new Lista<>();
             if (reini > 0) {
                 if (rand.nextBoolean()) {
@@ -136,7 +135,7 @@ public class BusquedaTaboo {
                     siguiente.coste = Solucion.funCoste(siguiente, listaDist);
                     eval++;
                     siguiente.eval = eval;
-                    if (siguiente.eval % P2.MAX == 0) {
+                    if (siguiente.eval % P2.MS == 0) {
                         convergencia[tamP].add(siguiente.coste);
                     }
                     iter++;
@@ -163,7 +162,7 @@ public class BusquedaTaboo {
         int cam = P[2];
         int iter = 0;
         int eval = inicial.eval;
-        int vecindario = 0;
+        int vecindario;
         Matriz listaDist = P2.listaDist.get(tamP);
 
         inicial.coste = Solucion.funCoste(inicial, listaDist);
@@ -171,13 +170,11 @@ public class BusquedaTaboo {
         eval++;
         inicial.eval = eval;
         convergencia.add(inicial.coste);
-        int muestra = maxiter / P2.RESTART;
         Solucion actual, siguiente, mejor;
         if (elite.coste > inicial.coste) {
             elite = inicial;
         }
 
-        //Limpiando la lista tabu
         Lista<Movimiento> listaTaboo = new Lista<>();
 
         while (iter < maxiter) {
@@ -190,7 +187,7 @@ public class BusquedaTaboo {
                 iter++;
                 eval++;
                 siguiente.eval = eval;
-                if (siguiente.eval % muestra == 0) {
+                if (siguiente.eval % P2.MM == 0) {
                     convergencia.add(siguiente.coste);
                 }
                 vecindario++;

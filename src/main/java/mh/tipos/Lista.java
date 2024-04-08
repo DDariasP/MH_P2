@@ -1,4 +1,4 @@
-package mh;
+package mh.tipos;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,7 @@
 package mh;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+import mh.tipos.*;
+import java.awt.*;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -16,7 +16,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class GraficaM extends JFrame {
 
-    public GraficaM(Lista<Integer>[] datos, String nombre, String muestra) {
+    public GraficaM(Lista<Integer>[] datos, String nombre) {
         //crear la grafica
         XYPlot plot = new XYPlot();
 
@@ -33,7 +33,7 @@ public class GraficaM extends JFrame {
         }
 
         //crear y añadir los ejes
-        ValueAxis domain = new NumberAxis("Evaluación (" + muestra + ")");
+        ValueAxis domain = new NumberAxis("Evaluación (1 : " + P2.MM + ")");
         ValueAxis range = new NumberAxis("Coste");
         plot.setDomainAxis(0, domain);
         plot.setRangeAxis(0, range);

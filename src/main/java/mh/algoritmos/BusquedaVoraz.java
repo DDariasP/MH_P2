@@ -1,4 +1,7 @@
-package mh;
+package mh.algoritmos;
+
+import mh.*;
+import mh.tipos.*;
 
 /**
  *

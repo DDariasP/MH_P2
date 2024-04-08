@@ -1,4 +1,4 @@
-package mh;
+package mh.tipos;
 
 /**
  *
@@ -62,6 +62,14 @@ public class Candidato {
         Candidato obj = (Candidato) o;
 
         return (id == obj.id);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + this.id;
+        hash = 43 * hash + this.coste;
+        return hash;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package mh;
 
+import mh.tipos.*;
+import mh.algoritmos.*;
 import java.util.ArrayList;
 
 /**
@@ -9,6 +11,8 @@ import java.util.ArrayList;
 public class P2 {
 
     public static final int MAX = 5000;
+    public static final int MS = MAX;
+    public static final int MM = MAX * 2;
     public static final int RESTART = 10;
     public static final int VECIN = 100;
     public static final int MAXPAL = 14;
@@ -23,10 +27,10 @@ public class P2 {
      */
     public static void main(String[] args) {
 
-//        System.out.println("RandomTest");
-//        System.out.println("---------------------");
-//        RandomTest.randomTest();
-//        System.out.println("---------------------\n");
+        System.out.println("RandomTest");
+        System.out.println("---------------------");
+        RandomTest.randomTest();
+        System.out.println("---------------------\n");
 
         listaDist = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
@@ -40,14 +44,13 @@ public class P2 {
             listaPal.add(Parser.leerPal("destinos_palets_" + pal + ".txt"));
         }
 
-        System.out.println("BV");
+        System.out.println("\nBV");
         BusquedaVoraz bv = new BusquedaVoraz();
         System.out.println("---------------------");
         bv.ejecutarBV();
         System.out.println("---------------------");
-        System.out.println("");
 
-        System.out.println("BA");
+        System.out.println("\nBA");
         BusquedaAleatoria[] ba = new BusquedaAleatoria[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
@@ -55,9 +58,8 @@ public class P2 {
             ba[i].ejecutarBA();
             System.out.println("---------------------");
         }
-        System.out.println("");
 
-        System.out.println("BL");
+        System.out.println("\nBL");
         BusquedaLocal[] bl = new BusquedaLocal[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
@@ -65,9 +67,8 @@ public class P2 {
             bl[i].ejecutarBL();
             System.out.println("---------------------");
         }
-        System.out.println("");
 
-        System.out.println("ES");
+        System.out.println("\nES");
         EnfriamientoSimulado[] es = new EnfriamientoSimulado[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
@@ -75,9 +76,8 @@ public class P2 {
             es[i].ejecutarES();
             System.out.println("---------------------");
         }
-        System.out.println("");
 
-        System.out.println("BT");
+        System.out.println("\nBT");
         BusquedaTaboo[] bt = new BusquedaTaboo[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
@@ -85,9 +85,8 @@ public class P2 {
             bt[i].ejecutarBT();
             System.out.println("---------------------");
         }
-        System.out.println("");
 
-        System.out.println("GRASP-BL");
+        System.out.println("\nGRASP-BL");
         GRASP[] gbl = new GRASP[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
@@ -96,8 +95,7 @@ public class P2 {
             System.out.println("---------------------");
         }
 
-        System.out.println("");
-        System.out.println("GRASP-ES");
+        System.out.println("\nGRASP-ES");
         GRASP[] ges = new GRASP[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
@@ -106,8 +104,7 @@ public class P2 {
             System.out.println("---------------------");
         }
 
-        System.out.println("");
-        System.out.println("GRASP-BT");
+        System.out.println("\nGRASP-BT");
         GRASP[] gbt = new GRASP[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
@@ -116,18 +113,16 @@ public class P2 {
             System.out.println("---------------------");
         }
 
-        System.out.println("");
-        System.out.println("ILS-BLF");
+        System.out.println("\nILS-BL");
         ILS[] sbl = new ILS[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
             sbl[i] = new ILS(SEED[i]);
-            sbl[i].ejecutarBLF();
+            sbl[i].ejecutarBL();
             System.out.println("---------------------");
         }
 
-        System.out.println("");
-        System.out.println("ILS-ES");
+        System.out.println("\nILS-ES");
         ILS[] ses = new ILS[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
@@ -136,8 +131,7 @@ public class P2 {
             System.out.println("---------------------");
         }
 
-        System.out.println("");
-        System.out.println("ILS-BT");
+        System.out.println("\nILS-BT");
         ILS[] sbt = new ILS[SEED.length];
         System.out.println("---------------------");
         for (int i = 0; i < SEED.length; i++) {
@@ -145,7 +139,6 @@ public class P2 {
             sbt[i].ejecutarBT();
             System.out.println("---------------------");
         }
-        System.out.println("");
 
         ArrayList<Object> resultados = new ArrayList<>();
         resultados.add(bv);

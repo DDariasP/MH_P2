@@ -1,5 +1,7 @@
 package mh;
 
+import mh.algoritmos.*;
+import mh.tipos.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
